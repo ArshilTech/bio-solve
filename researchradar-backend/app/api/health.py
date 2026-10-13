@@ -19,7 +19,10 @@ async def health_ready():
     settings = get_settings()
     
     # Check AI key readiness without revealing value
-    ai_configured = bool(settings.xai_api_key and len(settings.xai_api_key.strip()) > 5)
+    ai_configured = bool(
+        settings.xai_api_key.get_secret_value()
+        and len(settings.xai_api_key.get_secret_value().strip()) > 5
+    )
     
     # Check Europe PMC reachability with light HEAD/GET
     europe_pmc_ready = False
@@ -35,13 +38,9 @@ async def health_ready():
 
     is_ready = ai_configured and europe_pmc_ready
 
+    # Return minimal status - avoid exposing internal dependency details publicly
     return {
         "status": "ready" if is_ready else "degraded",
         "service": "ResearchRadar AI",
         "version": "1.0.0",
-        "dependencies": {
-            "ai_configured": ai_configured,
-            "europe_pmc_reachable": europe_pmc_ready,
-            "database_ready": True,
-        },
     }

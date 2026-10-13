@@ -1,19 +1,23 @@
 from uuid import uuid4
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Request
 from app.schemas.requests import AnalyzeRequest
 from app.services.gap_analyzer import analyze_research_question
 from app.repositories.analysis_repository import save_analysis, get_analysis, get_all_analyses
 from app.utils.logging import logger
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 router = APIRouter(tags=["Analysis"])
+limiter = Limiter(key_func=get_remote_address)
 
 
 @router.post("/analyze")
-async def analyze(request: AnalyzeRequest):
+@limiter.limit("10/minute")
+async def analyze(request: Request, body: AnalyzeRequest):
     try:
         result = await analyze_research_question(
-            question=request.question,
-            max_papers=request.max_papers,
+            question=body.question,
+            max_papers=body.max_papers,
         )
 
         analysis_id = str(uuid4())

@@ -1,12 +1,12 @@
 import os
 from pathlib import Path
 from functools import lru_cache
-from pydantic import Field
+from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    xai_api_key: str = Field(default="", description="API key for Grok or compatible OpenAI endpoint")
+    xai_api_key: SecretStr = Field(default=SecretStr(""), description="API key for Grok or compatible OpenAI endpoint")
     xai_base_url: str = Field(default="https://api.x.ai/v1", description="API base URL")
     xai_model: str = Field(default="openai/gpt-oss-120b", description="Model identifier")
 
@@ -34,7 +34,8 @@ class Settings(BaseSettings):
     @property
     def resolved_base_url(self) -> str:
         # If user configured a gsk_ key (Groq Cloud) with default x.ai URL, auto-route to Groq endpoint
-        if self.xai_api_key.startswith("gsk_") and "api.x.ai" in self.xai_base_url:
+        key_val = self.xai_api_key.get_secret_value()
+        if key_val.startswith("gsk_") and "api.x.ai" in self.xai_base_url:
             return "https://api.groq.com/openai/v1"
         return self.xai_base_url
 

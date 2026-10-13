@@ -13,7 +13,7 @@ settings = get_settings()
 
 def get_ai_client() -> AsyncOpenAI:
     return AsyncOpenAI(
-        api_key=settings.xai_api_key,
+        api_key=settings.xai_api_key.get_secret_value(),
         base_url=settings.resolved_base_url,
         timeout=httpx.Timeout(settings.request_timeout_seconds + 20.0),
         max_retries=2,
