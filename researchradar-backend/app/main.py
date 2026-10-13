@@ -24,6 +24,11 @@ init_db()
 # Rate limiter - keyed by client IP
 limiter = Limiter(key_func=get_remote_address, default_limits=["120/minute"])
 
+# Hide interactive docs when an API_KEY is configured (i.e. production).
+# In local dev / demo mode (API_KEY unset) /docs and /redoc remain available.
+_docs_url = None if settings.api_key.get_secret_value().strip() else "/docs"
+_redoc_url = None if settings.api_key.get_secret_value().strip() else "/redoc"
+
 app = FastAPI(
     title="ResearchRadar AI",
     description=(
@@ -31,6 +36,8 @@ app = FastAPI(
         "for water contamination and biosensors."
     ),
     version="1.0.0",
+    docs_url=_docs_url,
+    redoc_url=_redoc_url,
 )
 
 # Attach rate limiter state and middleware
@@ -44,7 +51,7 @@ app.add_middleware(
     allow_origins=settings.allowed_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST", "OPTIONS"],
-    allow_headers=["*"],
+    allow_headers=["Content-Type", "Accept", "X-API-Key"],
 )
 
 # Register API routes under /api

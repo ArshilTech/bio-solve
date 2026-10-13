@@ -7,6 +7,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     xai_api_key: SecretStr = Field(default=SecretStr(""), description="API key for Grok or compatible OpenAI endpoint")
+    api_key: SecretStr = Field(
+        default=SecretStr(""),
+        description=(
+            "Optional server-side API key for guarding expensive endpoints "
+            "(X-API-Key header). Leave empty to disable auth (local dev/demo)."
+        ),
+    )
     xai_base_url: str = Field(default="https://api.x.ai/v1", description="API base URL")
     xai_model: str = Field(default="openai/gpt-oss-120b", description="Model identifier")
 

@@ -1,14 +1,15 @@
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, Depends, HTTPException
 from app.schemas.requests import ExperimentRequest
 from app.schemas.experiments import ExperimentResponse
 from app.services.experiment_generator import generate_experiment_proposal
 from app.utils.errors import ResourceNotFoundError
 from app.utils.logging import logger
+from app.dependencies.auth import require_api_key
 
 router = APIRouter(tags=["Experiments"])
 
 
-@router.post("/experiments", response_model=ExperimentResponse)
+@router.post("/experiments", response_model=ExperimentResponse, dependencies=[Depends(require_api_key)])
 async def create_experiment(request: ExperimentRequest):
     try:
         return await generate_experiment_proposal(
