@@ -1,1259 +1,697 @@
-
-import { useMemo, useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
-  ArrowLeft,
-  ArrowRight,
-  Beaker,
   BookOpen,
-  CheckCircle2,
-  CircleHelp,
-  ExternalLink,
   FileSearch,
   FlaskConical,
-  GitBranch,
-  LoaderCircle,
-  Microscope,
   Network,
   Search,
-  Sparkles,
+  ArrowRight,
   AlertTriangle,
-  Copy,
+  X,
   RefreshCw,
   SlidersHorizontal,
+  Clock,
   Droplets,
-  Clock3,
-  Waves,
-  X,
+  ShieldCheck,
 } from "lucide-react";
-import { analyzeQuestion, generateExperiment } from "./lib/api";
+
 import Sidebar from "./components/layout/Sidebar";
 import Header from "./components/layout/Header";
+import PageTitle from "./components/common/PageTitle";
+import SectionHeading from "./components/common/SectionHeading";
+import EmptyState from "./components/common/EmptyState";
+import Button from "./components/common/Button";
+import Tag from "./components/common/Tag";
+
+import DiscoveryComposer from "./components/research/DiscoveryComposer";
 import StatCard from "./components/research/StatCard";
 import GapCard from "./components/research/GapCard";
+import GapDetailView from "./components/research/GapDetailView";
 
-const sampleQuestions = [
-  "Can low-cost biosensors reliably detect water contamination in rural communities?",
-  "How does long-term field deployment affect low-cost water-quality sensors?",
-  "Which water conditions influence the accuracy of portable biosensors?",
-];
+import PaperCard from "./components/papers/PaperCard";
+import PaperDetailModal from "./components/papers/PaperDetailModal";
 
-const cn = (...values) => values.filter(Boolean).join(" ");
+import EvidenceGraph from "./components/graph/EvidenceGraph";
+import ExperimentView from "./components/experiments/ExperimentView";
 
-function IconBox({ children, className = "" }) {
-  return (
-    <div
-      className={cn(
-        "grid h-10 w-10 shrink-0 place-items-center rounded-xl",
-        className
-      )}
-    >
-      {children}
-    </div>
-  );
-}
-
-function Tag({ children, tone = "slate" }) {
-  const tones = {
-    slate: "bg-slate-100 text-slate-600",
-    green: "bg-emerald-50 text-emerald-700",
-    amber: "bg-amber-50 text-amber-700",
-    blue: "bg-cyan-50 text-cyan-700",
-    red: "bg-rose-50 text-rose-700",
-    dark: "bg-[#e2efea] text-[#245a4c]",
-  };
-
-  return (
-    <span
-      className={cn(
-        "inline-flex items-center rounded-full px-2.5 py-1 text-[11px] font-semibold",
-        tones[tone] || tones.slate
-      )}
-    >
-      {children}
-    </span>
-  );
-}
-
-function Button({
-  children,
-  onClick,
-  variant = "primary",
-  disabled = false,
-  className = "",
-  type = "button",
-}) {
-  const variants = {
-    primary:
-      "bg-[#176f60] text-white shadow-sm hover:bg-[#12594e] disabled:bg-[#9cbab2]",
-    secondary:
-      "border border-[#d9e3de] bg-white text-[#24413d] hover:bg-[#f7faf8]",
-    ghost: "text-[#55716a] hover:bg-[#edf4f0]",
-  };
-
-  return (
-    <button
-      type={type}
-      disabled={disabled}
-      onClick={onClick}
-      className={cn(
-        "inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed",
-        variants[variant],
-        className
-      )}
-    >
-      {children}
-    </button>
-  );
-}
-
-function PageTitle({ eyebrow, title, description, action }) {
-  return (
-    <div className="mb-7 flex flex-col justify-between gap-4 md:flex-row md:items-end">
-      <div>
-        {eyebrow && (
-          <div className="mb-2 text-[10px] font-bold uppercase tracking-[0.2em] text-[#438878]">
-            {eyebrow}
-          </div>
-        )}
-        <h1 className="text-[25px] font-bold tracking-tight text-[#173a34] sm:text-[30px]">
-          {title}
-        </h1>
-        {description && (
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-[#71847c]">
-            {description}
-          </p>
-        )}
-      </div>
-      {action}
-    </div>
-  );
-}
-
-
-function ResearchForm({ question, setQuestion, onAnalyze, loading }) {
-  return (
-    <div className="relative overflow-hidden rounded-[24px] bg-[#173d37] p-6 text-white sm:p-8">
-      <div className="pointer-events-none absolute -right-12 -top-16 h-64 w-64 rounded-full border border-white/10" />
-      <div className="pointer-events-none absolute -right-1 -top-4 h-48 w-48 rounded-full border border-white/10" />
-
-      <div className="relative max-w-3xl">
-        <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.15em] text-[#c7f18e]">
-          <Sparkles size={13} /> Evidence-backed discovery
-        </div>
-
-        <h2 className="max-w-xl text-[25px] font-bold leading-tight tracking-tight sm:text-[32px]">
-          Find the questions science hasn't answered yet.
-        </h2>
-
-        <p className="mt-3 max-w-xl text-sm leading-6 text-[#c0d4cc]">
-          Explore water contamination and biosensor literature, then trace
-          candidate research gaps back to their sources.
-        </p>
-
-        <label
-          htmlFor="research-question"
-          className="mt-7 block text-xs font-semibold text-[#e3eee8]"
-        >
-          Your research question
-        </label>
-
-        <textarea
-          id="research-question"
-          value={question}
-          onChange={(e) => setQuestion(e.target.value)}
-          rows={3}
-          maxLength={500}
-          placeholder="e.g. Can low-cost biosensors reliably detect water contamination in rural communities?"
-          className="mt-2 w-full resize-y rounded-2xl border border-white/15 bg-[#0f302b]/80 px-4 py-4 text-sm leading-6 text-white outline-none placeholder:text-[#8da9a0] focus:border-[#b9ef71] focus:ring-2 focus:ring-[#b9ef71]/15"
-        />
-
-        <div className="mt-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <span className="text-[11px] text-[#91b0a4]">
-            {question.length}/500 characters
-          </span>
-
-          <Button
-            onClick={onAnalyze}
-            disabled={loading || question.trim().length < 10}
-            className="w-full sm:w-auto"
-          >
-            {loading ? (
-              <>
-                <LoaderCircle size={16} className="animate-spin" />
-                Analyzing literature...
-              </>
-            ) : (
-              <>
-                <Search size={16} /> Analyze literature <ArrowRight size={15} />
-              </>
-            )}
-          </Button>
-        </div>
-
-        <div className="mt-5 flex flex-wrap gap-2">
-          {sampleQuestions.map((sample) => (
-            <button
-              key={sample}
-              onClick={() => setQuestion(sample)}
-              className="rounded-full border border-white/15 px-3 py-2 text-left text-[10px] text-[#d0e1d9] transition hover:border-[#b9ef71]/60 hover:bg-white/5"
-            >
-              {sample}
-            </button>
-          ))}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function SectionHeading({ title, detail, action }) {
-  return (
-    <div className="mb-4 flex items-center justify-between gap-3">
-      <div>
-        <h3 className="text-[15px] font-bold text-[#23433c]">{title}</h3>
-        {detail && <p className="mt-1 text-xs text-[#87978f]">{detail}</p>}
-      </div>
-      {action}
-    </div>
-  );
-}
-
-function PaperCard({ paper, onOpen }) {
-  return (
-    <article className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-      <div className="flex gap-3">
-        <IconBox className="bg-[#edf5ef] text-[#3b7b67]">
-          <BookOpen size={18} />
-        </IconBox>
-
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <Tag tone="dark">{paper.source || "Literature source"}</Tag>
-            {paper.year && (
-              <span className="text-[11px] text-[#84948c]">{paper.year}</span>
-            )}
-          </div>
-          <h3 className="mt-2 text-[15px] font-bold leading-6 text-[#214139]">
-            {paper.title}
-          </h3>
-          <p className="mt-1 text-[11px] text-[#819188]">
-            {Array.isArray(paper.authors)
-              ? paper.authors.join(", ")
-              : paper.authors || "Authors not supplied"}
-          </p>
-        </div>
-      </div>
-
-      <p className="mt-4 text-[13px] leading-6 text-[#6e8279]">
-        {paper.abstract || "No abstract was provided for this record."}
-      </p>
-
-      <div className="mt-4 flex flex-wrap items-center justify-between gap-3 border-t border-[#edf1ed] pt-3">
-        <div className="text-[10px] text-[#8b9b93]">
-          {paper.doi
-            ? `DOI: ${paper.doi}`
-            : paper.publication_type || "Publication type not supplied"}
-        </div>
-        <button
-          onClick={() => onOpen(paper)}
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#287361] hover:text-[#164f43]"
-        >
-          Open source <ExternalLink size={13} />
-        </button>
-      </div>
-    </article>
-  );
-}
-
-function EvidenceView({ gap, papers, onBack, onExperiment }) {
-  const paperMap = Object.fromEntries(papers.map((paper) => [paper.id, paper]));
-
-  return (
-    <div>
-      <button
-        onClick={onBack}
-        className="mb-5 inline-flex items-center gap-2 text-xs font-semibold text-[#658078] hover:text-[#1c5e4e]"
-      >
-        <ArrowLeft size={15} /> Back to research gaps
-      </button>
-
-      <PageTitle
-        eyebrow="Candidate gap · Evidence review"
-        title={gap.title}
-        description={gap.description}
-        action={
-          <Button onClick={() => onExperiment(gap)}>
-            <FlaskConical size={15} /> Propose experiment
-          </Button>
-        }
-      />
-
-      <div className="grid gap-5 xl:grid-cols-[1.4fr_0.8fr]">
-        <div className="space-y-5">
-          <section className="rounded-2xl border border-[#e2e9e4] bg-white p-5 sm:p-6">
-            <SectionHeading title="Why it may matter" />
-            <p className="text-sm leading-7 text-[#637a70]">
-              {gap.why_it_matters ||
-                "The analysis did not return an explanation for this field."}
-            </p>
-            <div className="mt-5 rounded-xl border-l-4 border-[#a6d86d] bg-[#f5f9f2] p-4">
-              <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#64865b]">
-                Next research question
-              </div>
-              <p className="mt-2 text-sm font-medium leading-6 text-[#315a49]">
-                {gap.next_research_question || "No follow-up question supplied."}
-              </p>
-            </div>
-          </section>
-
-          <section className="rounded-2xl border border-[#e2e9e4] bg-white p-5 sm:p-6">
-            <SectionHeading
-              title="Source passages"
-              detail="Open each paper to inspect the original publication record."
-            />
-            <div className="space-y-4">
-              {(gap.evidence || []).length === 0 && (
-                <p className="rounded-xl bg-[#f7faf7] p-4 text-sm text-[#7a8c83]">
-                  No source passages were returned for this gap.
-                </p>
-              )}
-
-              {(gap.evidence || []).map((item, index) => {
-                const paper = paperMap[item.paper_id];
-
-                return (
-                  <div
-                    key={`${item.paper_id}-${index}`}
-                    className="rounded-xl border border-[#e7ede8] p-4"
-                  >
-                    <div className="flex flex-wrap items-center justify-between gap-2">
-                      <div className="text-xs font-bold text-[#2b6252]">
-                        {item.paper_id}
-                        {paper ? ` · ${paper.title}` : ""}
-                      </div>
-                      <Tag tone={item.verified === false ? "amber" : "green"}>
-                        {item.verified === false
-                          ? "Unverified passage"
-                          : "Evidence supplied"}
-                      </Tag>
-                    </div>
-
-                    <blockquote className="mt-3 border-l-2 border-[#b9d8c8] pl-3 text-[13px] leading-6 text-[#64796f]">
-                      “{item.passage}”
-                    </blockquote>
-
-                    {paper?.source_url && (
-                      <a
-                        href={paper.source_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-[#27735f] hover:underline"
-                      >
-                        View source <ExternalLink size={12} />
-                      </a>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-        </div>
-
-        <div className="space-y-5">
-          <section className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-            <SectionHeading title="Assessment" />
-            <div className="flex items-center justify-between border-b border-[#edf1ed] py-3">
-              <span className="text-xs text-[#7b8c84]">Priority score</span>
-              <strong className="text-xl text-[#1c5b4b]">
-                {gap.priority_score ?? "—"}
-                <span className="text-xs font-medium text-[#92a098]">
-                  {" "}
-                  / 100
-                </span>
-              </strong>
-            </div>
-            <div className="flex items-center justify-between border-b border-[#edf1ed] py-3">
-              <span className="text-xs text-[#7b8c84]">Priority</span>
-              <Tag
-                tone={
-                  gap.priority === "high"
-                    ? "red"
-                    : gap.priority === "medium"
-                      ? "amber"
-                      : "green"
-                }
-              >
-                {gap.priority || "Not ranked"}
-              </Tag>
-            </div>
-            <div className="flex items-center justify-between py-3">
-              <span className="text-xs text-[#7b8c84]">Evidence strength</span>
-              <Tag tone="blue">{gap.evidence_strength || "Not rated"}</Tag>
-            </div>
-            <p className="mt-2 text-xs leading-5 text-[#7e9087]">
-              {gap.score_explanation ||
-                "Priority scores are indicative and should be interpreted using the scoring method supplied by the backend."}
-            </p>
-          </section>
-
-          <section className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-            <SectionHeading
-              title="Supporting literature"
-              detail={`${(gap.supporting_paper_ids || []).length} linked record(s)`}
-            />
-            <div className="space-y-2">
-              {(gap.supporting_paper_ids || []).map((id) => {
-                const paper = paperMap[id];
-
-                return (
-                  <div
-                    key={id}
-                    className="flex items-start gap-3 rounded-xl bg-[#f7faf7] p-3"
-                  >
-                    <span className="rounded-md bg-white px-2 py-1 text-[10px] font-bold text-[#4c7868]">
-                      {id}
-                    </span>
-                    <div className="text-xs leading-5 text-[#5f786d]">
-                      {paper?.title || "Source title unavailable"}
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          </section>
-
-          <section className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-            <SectionHeading title="Known limitations" />
-            <ul className="space-y-2.5">
-              {(gap.limitations || []).map((item, index) => (
-                <li
-                  key={index}
-                  className="flex gap-2 text-xs leading-5 text-[#73867c]"
-                >
-                  <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-[#d0a64f]" />
-                  {item}
-                </li>
-              ))}
-            </ul>
-          </section>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function EvidenceMap({ analysis, onOpenGap }) {
-  const [selected, setSelected] = useState(null);
-  const gaps = analysis?.gaps || [];
-  const papers = analysis?.papers || [];
-  const paperMap = Object.fromEntries(papers.map((paper) => [paper.id, paper]));
-
-  return (
-    <div>
-      <PageTitle
-        eyebrow="Literature relationships"
-        title="Evidence map"
-        description="Explore how retrieved papers connect to candidate research gaps. Connections are based on the analysis response, not a claim of definitive proof."
-      />
-
-      {!gaps.length ? (
-        <EmptyState
-          title="No evidence map yet"
-          detail="Run a literature analysis first to create paper-to-gap relationships."
-        />
-      ) : (
-        <div className="grid gap-5 xl:grid-cols-[1fr_300px]">
-          <div className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-            <div className="mb-5 flex flex-wrap items-center gap-4 text-[11px] text-[#70867b]">
-              <span className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-full bg-[#1c7764]" /> Paper
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="h-3 w-3 rounded-md bg-[#c9ec8d]" /> Candidate gap
-              </span>
-              <span className="flex items-center gap-2">
-                <span className="h-[2px] w-5 bg-[#9db9ad]" /> Supports relationship
-              </span>
-            </div>
-
-            <div className="grid gap-4 md:grid-cols-2">
-              <div className="space-y-2">
-                <div className="mb-3 text-[10px] font-bold uppercase tracking-[0.17em] text-[#8ba097]">
-                  Source papers
-                </div>
-                {papers.map((paper) => (
-                  <button
-                    key={paper.id}
-                    onClick={() => setSelected({ type: "paper", item: paper })}
-                    className={cn(
-                      "flex w-full items-start gap-3 rounded-xl border p-3 text-left transition",
-                      selected?.item?.id === paper.id
-                        ? "border-[#72a995] bg-[#f0f8f3]"
-                        : "border-[#e4ebe5] hover:bg-[#f8faf8]"
-                    )}
-                  >
-                    <span className="rounded-lg bg-[#1c7764] px-2 py-1 text-[10px] font-bold text-white">
-                      {paper.id}
-                    </span>
-                    <span className="text-xs font-medium leading-5 text-[#4c6b5f]">
-                      {paper.title}
-                    </span>
-                  </button>
-                ))}
-              </div>
-
-              <div className="space-y-2">
-                <div className="mb-3 text-[10px] font-bold uppercase tracking-[0.17em] text-[#8ba097]">
-                  Candidate gaps
-                </div>
-                {gaps.map((gap) => (
-                  <button
-                    key={gap.id}
-                    onClick={() => setSelected({ type: "gap", item: gap })}
-                    className={cn(
-                      "flex w-full items-start gap-3 rounded-xl border p-3 text-left transition",
-                      selected?.item?.id === gap.id
-                        ? "border-[#b7d67b] bg-[#f7fbea]"
-                        : "border-[#e4ebe5] hover:bg-[#fbfcf7]"
-                    )}
-                  >
-                    <span className="rounded-lg bg-[#d7efaa] px-2 py-1 text-[10px] font-bold text-[#385d3c]">
-                      {gap.id}
-                    </span>
-                    <span className="text-xs font-medium leading-5 text-[#4c6b5f]">
-                      {gap.title}
-                      <span className="mt-1 block text-[10px] text-[#8a9b91]">
-                        {(gap.supporting_paper_ids || []).length} linked papers
-                      </span>
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <div className="mt-5 rounded-xl bg-[#f7faf7] p-3 text-[11px] leading-5 text-[#84948c]">
-              <Network size={14} className="mr-1 inline" /> This compact
-              relationship view is built from the backend's paper IDs and
-              supporting-paper links. Select a node to inspect its connections.
-            </div>
-          </div>
-
-          <aside className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-            <SectionHeading title="Selected node" />
-
-            {!selected ? (
-              <p className="text-xs leading-5 text-[#87968e]">
-                Select a paper or candidate gap to inspect its relationships.
-              </p>
-            ) : selected.type === "paper" ? (
-              <>
-                <Tag tone="green">Source paper</Tag>
-                <h3 className="mt-3 text-sm font-bold leading-6 text-[#24483d]">
-                  {selected.item.title}
-                </h3>
-                <p className="mt-2 text-xs leading-5 text-[#819188]">
-                  {selected.item.abstract}
-                </p>
-                <div className="mt-4 text-[10px] font-bold uppercase tracking-wider text-[#8a9b91]">
-                  Linked candidate gaps
-                </div>
-                <div className="mt-2 space-y-2">
-                  {gaps
-                    .filter((gap) =>
-                      (gap.supporting_paper_ids || []).includes(
-                        selected.item.id
-                      )
-                    )
-                    .map((gap) => (
-                      <button
-                        key={gap.id}
-                        onClick={() => setSelected({ type: "gap", item: gap })}
-                        className="block w-full rounded-lg bg-[#f5f9f5] p-3 text-left text-xs font-medium text-[#477261]"
-                      >
-                        {gap.title}
-                      </button>
-                    ))}
-                </div>
-                {selected.item.source_url && (
-                  <a
-                    className="mt-4 inline-flex items-center gap-1 text-xs font-semibold text-[#24725f]"
-                    href={selected.item.source_url}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    Open source <ExternalLink size={12} />
-                  </a>
-                )}
-              </>
-            ) : (
-              <>
-                <Tag tone="amber">Candidate gap</Tag>
-                <h3 className="mt-3 text-sm font-bold leading-6 text-[#24483d]">
-                  {selected.item.title}
-                </h3>
-                <p className="mt-2 text-xs leading-5 text-[#819188]">
-                  {selected.item.description}
-                </p>
-                <div className="mt-4 text-[10px] font-bold uppercase tracking-wider text-[#8a9b91]">
-                  Supporting papers
-                </div>
-                <div className="mt-2 space-y-2">
-                  {(selected.item.supporting_paper_ids || []).map((id) => (
-                    <button
-                      key={id}
-                      onClick={() =>
-                        paperMap[id] &&
-                        setSelected({ type: "paper", item: paperMap[id] })
-                      }
-                      className="block w-full rounded-lg bg-[#f5f9f5] p-3 text-left text-xs font-medium text-[#477261]"
-                    >
-                      {id} · {paperMap[id]?.title || "Paper unavailable"}
-                    </button>
-                  ))}
-                </div>
-                <Button
-                  className="mt-4 w-full"
-                  onClick={() => onOpenGap(selected.item)}
-                >
-                  Inspect gap <ArrowRight size={14} />
-                </Button>
-              </>
-            )}
-          </aside>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function ExperimentPage({
-  gap,
-  experiment,
-  loading,
-  error,
-  onGenerate,
-  onCopy,
-}) {
-  const sections = [
-    ["Research question", experiment?.research_question],
-    ["Hypothesis", experiment?.hypothesis],
-    ["Study design", experiment?.study_design],
-    ["Samples and conditions", experiment?.samples_and_conditions],
-    ["Measurements", experiment?.measurements],
-    ["Controls", experiment?.controls],
-    ["Analysis method", experiment?.analysis_method],
-    ["Safety considerations", experiment?.safety_considerations],
-    ["Limitations", experiment?.limitations],
-  ];
-
-  return (
-    <div>
-      <PageTitle
-        eyebrow="From gap to next step"
-        title="Experiment lab"
-        description="Turn a selected candidate gap into a research proposal grounded in the current analysis."
-      />
-
-      {!gap ? (
-        <EmptyState
-          title="Choose a candidate gap first"
-          detail="Open a gap from Research gap analysis and select “Propose experiment” to prepare a study plan."
-        />
-      ) : (
-        <>
-          <div className="mb-5 rounded-2xl border border-[#dce8de] bg-[#f1f7ef] p-5">
-            <div className="flex items-start gap-3">
-              <IconBox className="bg-white text-[#42775b]">
-                <FlaskConical size={19} />
-              </IconBox>
-              <div>
-                <div className="text-[10px] font-bold uppercase tracking-[0.17em] text-[#668d62]">
-                  Selected candidate gap
-                </div>
-                <h2 className="mt-1 text-base font-bold text-[#254a3b]">
-                  {gap.title}
-                </h2>
-                <p className="mt-2 text-xs leading-5 text-[#708477]">
-                  {gap.next_research_question || gap.description}
-                </p>
-              </div>
-            </div>
-          </div>
-
-          {!experiment && (
-            <div className="rounded-2xl border border-[#e2e9e4] bg-white p-8 text-center">
-              <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#eaf4eb] text-[#39755d]">
-                <Beaker size={23} />
-              </div>
-              <h3 className="mt-4 text-base font-bold text-[#24483d]">
-                Draft a proposed experiment
-              </h3>
-              <p className="mx-auto mt-2 max-w-md text-sm leading-6 text-[#7b8c83]">
-                Generate a structured starting point with study design,
-                measurements, controls and limitations.
-              </p>
-              <Button
-                className="mt-5"
-                disabled={loading}
-                onClick={onGenerate}
-              >
-                {loading ? (
-                  <>
-                    <LoaderCircle size={15} className="animate-spin" /> Preparing
-                    proposal...
-                  </>
-                ) : (
-                  <>
-                    <Sparkles size={15} /> Generate proposal
-                  </>
-                )}
-              </Button>
-              {error && <p className="mt-3 text-xs text-rose-600">{error}</p>}
-            </div>
-          )}
-
-          {experiment && (
-            <>
-              <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-                <Tag tone="green">
-                  <CheckCircle2 size={12} className="mr-1" /> Proposal ready for
-                  review
-                </Tag>
-                <Button variant="secondary" onClick={onCopy}>
-                  <Copy size={14} /> Copy proposal
-                </Button>
-              </div>
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {sections
-                  .filter(([, value]) => value)
-                  .map(([title, value], index) => (
-                    <section
-                      key={title}
-                      className={cn(
-                        "rounded-2xl border border-[#e2e9e4] bg-white p-5",
-                        index === 0 || index === 2 || index === 8
-                          ? "md:col-span-2"
-                          : ""
-                      )}
-                    >
-                      <div className="mb-2 flex items-center gap-2 text-[10px] font-bold uppercase tracking-[0.16em] text-[#48816c]">
-                        <span className="grid h-6 w-6 place-items-center rounded-lg bg-[#edf5ef] text-[10px]">
-                          {String(index + 1).padStart(2, "0")}
-                        </span>
-                        {title}
-                      </div>
-                      <p className="text-sm leading-7 text-[#62796e]">
-                        {value}
-                      </p>
-                    </section>
-                  ))}
-              </div>
-
-              <div className="mt-5 flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs leading-5 text-amber-800">
-                <AlertTriangle size={16} className="mt-0.5 shrink-0" />
-                <p>
-                  This is an AI-generated research proposal, not a validated
-                  protocol. Review methods, sample sizes, safety and feasibility
-                  with a qualified biosciences mentor before conducting any
-                  work.
-                </p>
-              </div>
-            </>
-          )}
-        </>
-      )}
-    </div>
-  );
-}
-
-function EmptyState({ title, detail, action }) {
-  return (
-    <div className="rounded-2xl border border-dashed border-[#d5e1d8] bg-white px-6 py-14 text-center">
-      <div className="mx-auto grid h-12 w-12 place-items-center rounded-2xl bg-[#edf5ef] text-[#51816d]">
-        <CircleHelp size={22} />
-      </div>
-      <h3 className="mt-4 text-sm font-bold text-[#34574a]">{title}</h3>
-      <p className="mx-auto mt-2 max-w-md text-xs leading-6 text-[#82938a]">
-        {detail}
-      </p>
-      {action && <div className="mt-4">{action}</div>}
-    </div>
-  );
-}
+import { analyzeQuestion, generateExperiment, searchLiterature, listAnalyses } from "./lib/api";
 
 export default function App() {
+  // Navigation & UI state
   const [active, setActive] = useState("overview");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [question, setQuestion] = useState(sampleQuestions[0]);
-  const [analysis, setAnalysis] = useState(null);
+
+  // Discovery state
+  const [question, setQuestion] = useState("");
+  const [maxPapers, setMaxPapers] = useState(20);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  // Analyses state (session persistence + SQLite sync)
+  const [analysis, setAnalysis] = useState(null);
+  const [analyses, setAnalyses] = useState([]);
+
+  // Auto-sync existing persisted analyses from SQLite (not auto-selecting until user clicks)
+  React.useEffect(() => {
+    async function syncPersistedAnalyses() {
+      try {
+        const past = await listAnalyses(10);
+        if (Array.isArray(past) && past.length > 0) {
+          setAnalyses(past);
+        }
+      } catch (err) {
+        // Graceful fallback
+      }
+    }
+    syncPersistedAnalyses();
+  }, []);
+
+  // Gap view state
   const [selectedGap, setSelectedGap] = useState(null);
-  const [view, setView] = useState("list");
+  const [gapViewMode, setGapViewMode] = useState("list"); // "list" | "detail"
+  const [sortGapsBy, setSortGapsBy] = useState("priority");
+
+  // Literature view state
+  const [paperFilter, setPaperFilter] = useState("");
+  const [selectedPaper, setSelectedPaper] = useState(null);
+  const [isPaperModalOpen, setIsPaperModalOpen] = useState(false);
+  const [directSearchQuery, setDirectSearchQuery] = useState("");
+  const [directSearchLoading, setDirectSearchLoading] = useState(false);
+  const [directSearchResults, setDirectSearchResults] = useState(null);
+
+  // Experiment state
   const [experiment, setExperiment] = useState(null);
   const [experimentLoading, setExperimentLoading] = useState(false);
   const [experimentError, setExperimentError] = useState("");
-  const [paperFilter, setPaperFilter] = useState("");
-  const [sort, setSort] = useState("priority");
 
-  const gaps = useMemo(() => {
-    const all = [...(analysis?.gaps || [])];
+  // Run full question analysis
+  async function handleAnalyze() {
+    if (!question || question.trim().length < 10) return;
 
-    if (sort === "priority") {
-      return all.sort(
-        (a, b) => (b.priority_score ?? -1) - (a.priority_score ?? -1)
-      );
-    }
-
-    if (sort === "evidence") {
-      return all.sort(
-        (a, b) =>
-          (b.supporting_paper_ids?.length || 0) -
-          (a.supporting_paper_ids?.length || 0)
-      );
-    }
-
-    return all;
-  }, [analysis, sort]);
-
-  const papers = useMemo(
-    () =>
-      (analysis?.papers || []).filter((paper) =>
-        `${paper.title} ${paper.abstract || ""} ${
-          (paper.authors || []).join?.(" ") || ""
-        }`
-          .toLowerCase()
-          .includes(paperFilter.toLowerCase())
-      ),
-    [analysis, paperFilter]
-  );
-
-  async function runAnalysis() {
     setLoading(true);
     setError("");
     setSelectedGap(null);
     setExperiment(null);
+    setGapViewMode("list");
 
     try {
-      const result = await analyzeQuestion(question.trim(), 20);
+      const result = await analyzeQuestion(question.trim(), maxPapers);
 
-      if (
-        !result ||
-        !Array.isArray(result.gaps) ||
-        !Array.isArray(result.papers)
-      ) {
+      if (!result || !Array.isArray(result.gaps) || !Array.isArray(result.papers)) {
         throw new Error(
-          "The backend response is missing the papers or gaps arrays. Check the API response contract."
+          "Backend response did not adhere to required contract: missing 'papers' or 'gaps' array."
         );
       }
 
       setAnalysis(result);
+      setAnalyses((prev) => {
+        const exists = prev.some((a) => a.analysis_id === result.analysis_id);
+        return exists ? prev : [result, ...prev];
+      });
+
+      // Navigate to candidate gaps
       setActive("gaps");
-      setView("list");
+      setGapViewMode("list");
     } catch (err) {
-      setError(
-        err.message ||
-          "Analysis failed. Check that the backend is running and try again."
-      );
+      setError(err.message || "Failed to analyze scientific question. Check backend connection.");
     } finally {
       setLoading(false);
     }
   }
 
-  function openGap(gap) {
-    setSelectedGap(gap);
-    setActive("gaps");
-    setView("detail");
+  // Handle switching session analysis
+  function handleSelectSessionAnalysis(selected) {
+    setAnalysis(selected);
+    setQuestion(selected.question);
+    setSelectedGap(null);
+    setExperiment(null);
+    setGapViewMode("list");
   }
 
-  async function openExperiment(gap) {
+  // Gap actions
+  function handleOpenGap(gap) {
     setSelectedGap(gap);
+    setGapViewMode("detail");
+    setActive("gaps");
+  }
+
+  // Experiment actions
+  async function handleOpenExperiment(targetGap) {
+    const gapToUse = targetGap || selectedGap;
+    if (!gapToUse) {
+      setActive("experiment");
+      return;
+    }
+
+    setSelectedGap(gapToUse);
+    setActive("experiment");
     setExperiment(null);
     setExperimentError("");
-    setActive("experiment");
     setExperimentLoading(true);
 
     try {
-      const result = await generateExperiment(analysis?.analysis_id, gap.id);
+      const result = await generateExperiment(analysis?.analysis_id, gapToUse.id);
       setExperiment(result);
     } catch (err) {
-      setExperimentError(err.message || "Could not generate the proposal.");
+      setExperimentError(
+        err.message || "Could not synthesize experimental protocol for the selected gap."
+      );
     } finally {
       setExperimentLoading(false);
     }
   }
 
-  async function copyExperiment() {
-    const text = Object.entries(experiment || {})
-      .filter(([, value]) => typeof value === "string")
-      .map(
-        ([key, value]) => `${key.replaceAll("_", " ")}\n${value}`
-      )
-      .join("\n\n");
+  // Paper modal actions
+  function handleOpenPaperModal(paper) {
+    setSelectedPaper(paper);
+    setIsPaperModalOpen(true);
+  }
 
+  // Direct literature search on Europe PMC
+  async function handleDirectSearch(e) {
+    if (e) e.preventDefault();
+    if (!directSearchQuery.trim() || directSearchQuery.trim().length < 3) return;
+
+    setDirectSearchLoading(true);
     try {
-      await navigator.clipboard.writeText(text);
-    } catch {
-      setExperimentError(
-        "Clipboard access was unavailable. Select and copy the proposal text manually."
+      const res = await searchLiterature(directSearchQuery.trim(), 20);
+      setDirectSearchResults(res.papers || []);
+    } catch (err) {
+      setError(err.message || "Direct literature search failed.");
+    } finally {
+      setDirectSearchLoading(false);
+    }
+  }
+
+  // Sorted gaps
+  const sortedGaps = useMemo(() => {
+    const list = [...(analysis?.gaps || [])];
+    if (sortGapsBy === "priority") {
+      return list.sort((a, b) => (b.priority_score ?? -1) - (a.priority_score ?? -1));
+    }
+    if (sortGapsBy === "evidence") {
+      return list.sort(
+        (a, b) => (b.supporting_paper_ids?.length || 0) - (a.supporting_paper_ids?.length || 0)
       );
     }
-  }
+    return list;
+  }, [analysis, sortGapsBy]);
 
-  function openPaper(paper) {
-    if (paper.source_url) {
-      window.open(paper.source_url, "_blank", "noopener,noreferrer");
-    }
-  }
+  // Display papers (filtered from analysis or from direct search)
+  const displayPapers = useMemo(() => {
+    const sourcePapers = directSearchResults || analysis?.papers || [];
+    if (!paperFilter.trim()) return sourcePapers;
+
+    const term = paperFilter.toLowerCase();
+    return sourcePapers.filter((p) => {
+      const titleMatch = (p.title || "").toLowerCase().includes(term);
+      const abstractMatch = (p.abstract || "").toLowerCase().includes(term);
+      const authorsMatch = (Array.isArray(p.authors) ? p.authors.join(" ") : p.authors || "")
+        .toLowerCase()
+        .includes(term);
+      const idMatch = (p.id || "").toLowerCase().includes(term);
+      return titleMatch || abstractMatch || authorsMatch || idMatch;
+    });
+  }, [analysis, directSearchResults, paperFilter]);
 
   return (
-    <div className="min-h-screen bg-[#f5f7f5]">
+    <div className="min-h-screen bg-[#f6f8f6] text-[#122824]">
+      {/* Sidebar Navigation */}
       <Sidebar
         active={active}
-        setActive={setActive}
+        setActive={(id) => {
+          setActive(id);
+          if (id === "gaps") setGapViewMode("list");
+        }}
         open={menuOpen}
         setOpen={setMenuOpen}
+        analyses={analyses}
+        currentAnalysisId={analysis?.analysis_id}
+        onSelectAnalysis={handleSelectSessionAnalysis}
       />
 
-      <div className="min-h-screen lg:pl-[258px]">
-        <Header active={active} onMenu={() => setMenuOpen(true)} />
+      {/* Main Content Area */}
+      <div className="min-h-screen lg:pl-[268px] flex flex-col justify-between">
+        <div>
+          {/* Header */}
+          <Header
+            active={active}
+            onMenu={() => setMenuOpen(true)}
+            onNewSearch={() => {
+              setActive("overview");
+            }}
+            hasAnalysis={Boolean(analysis)}
+          />
 
-        <main className="mx-auto max-w-[1500px] px-4 py-6 sm:px-7 sm:py-8 lg:px-9">
-          {error && (
-            <div className="mb-5 flex items-start gap-3 rounded-xl border border-rose-200 bg-rose-50 p-4 text-sm text-rose-800">
-              <AlertTriangle size={17} className="mt-0.5 shrink-0" />
-              <div className="flex-1">
-                <div className="font-semibold">Could not complete analysis</div>
-                <p className="mt-1 text-xs leading-5">{error}</p>
-              </div>
-              <button
-                onClick={() => setError("")}
-                aria-label="Dismiss error"
-              >
-                <X size={16} />
-              </button>
-            </div>
-          )}
-
-          {active === "overview" && (
-            <div className="space-y-7">
-              <PageTitle
-                eyebrow="Water science · Biosensors · SDG 3 / 6 / 13"
-                title="Good research starts with better questions."
-                description="A focused workspace for exploring scientific literature, surfacing candidate research gaps and planning what to investigate next."
-                action={
-                  analysis && (
-                    <Button
-                      variant="secondary"
-                      onClick={() => setActive("gaps")}
-                    >
-                      <Clock3 size={15} /> Current analysis
-                    </Button>
-                  )
-                }
-              />
-
-              <ResearchForm
-                question={question}
-                setQuestion={setQuestion}
-                onAnalyze={runAnalysis}
-                loading={loading}
-              />
-
-              <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-                <StatCard
-                  label="Papers in analysis"
-                  value={analysis?.papers?.length ?? "—"}
-                  hint={
-                    analysis
-                      ? "Records returned for this question"
-                      : "Appears after your first analysis"
-                  }
-                  icon={BookOpen}
-                  tint="bg-[#e8f2ed] text-[#3c7b66]"
-                />
-                <StatCard
-                  label="Candidate gaps"
-                  value={analysis?.gaps?.length ?? "—"}
-                  hint={
-                    analysis
-                      ? "Potential questions surfaced"
-                      : "No findings generated yet"
-                  }
-                  icon={FileSearch}
-                  tint="bg-[#edf3dd] text-[#6d8840]"
-                />
-                <StatCard
-                  label="Evidence links"
-                  value={
-                    analysis
-                      ? analysis.gaps.reduce(
-                          (sum, gap) => sum + (gap.evidence?.length || 0),
-                          0
-                        )
-                      : "—"
-                  }
-                  hint="Passages supplied by the analysis"
-                  icon={GitBranch}
-                  tint="bg-[#e8f3f5] text-[#3e7f88]"
-                />
-                <StatCard
-                  label="Proposed studies"
-                  value={experiment ? "1" : "—"}
-                  hint="Generated when you select a gap"
-                  icon={FlaskConical}
-                  tint="bg-[#f7eee0] text-[#a47b3f]"
-                />
-              </div>
-
-              {analysis?.warnings?.length > 0 && (
-                <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs leading-5 text-amber-800">
-                  <AlertTriangle size={15} className="mr-2 inline" />
-                  {analysis.warnings.join(" ")}
+          {/* Main Container */}
+          <main className="mx-auto max-w-[1460px] px-4 py-6 sm:px-7 sm:py-8 lg:px-9">
+            {/* Error Notification Alert */}
+            {error && (
+              <div className="mb-6 flex items-start gap-3 rounded-2xl border border-rose-200 bg-rose-50/95 p-4 text-xs sm:text-sm text-rose-800 shadow-sm animate-in fade-in duration-200">
+                <AlertTriangle size={18} className="mt-0.5 shrink-0 text-rose-600" />
+                <div className="flex-1">
+                  <div className="font-bold">Service Alert</div>
+                  <p className="mt-0.5 leading-relaxed text-rose-700">{error}</p>
                 </div>
-              )}
+                <button
+                  type="button"
+                  onClick={() => setError("")}
+                  className="p-1 rounded-lg hover:bg-rose-100 text-rose-700"
+                  aria-label="Dismiss alert"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            )}
 
-              {analysis ? (
-                <section>
-                  <SectionHeading
-                    title="Latest candidate gaps"
-                    detail="Prioritized view from the current analysis"
-                    action={
+            {/* VIEW 1: RESEARCH DISCOVERY & OVERVIEW */}
+            {active === "overview" && (
+              <div className="space-y-8 animate-in fade-in duration-200">
+                <PageTitle
+                  title="Discover Unaddressed Questions in Science"
+                  description="An evidence-backed research intelligence platform mapping water contamination, biosensors, and environmental monitoring literature to discover verified research gaps."
+                  action={
+                    analysis && (
                       <Button
-                        variant="ghost"
-                        onClick={() => setActive("gaps")}
+                        variant="secondary"
+                        onClick={() => {
+                          setActive("gaps");
+                          setGapViewMode("list");
+                        }}
                       >
-                        View all <ArrowRight size={14} />
+                        <Clock size={14} />
+                        <span>View Current Analysis</span>
                       </Button>
+                    )
+                  }
+                />
+
+                {/* Discovery Composer Form */}
+                <DiscoveryComposer
+                  question={question}
+                  setQuestion={setQuestion}
+                  maxPapers={maxPapers}
+                  setMaxPapers={setMaxPapers}
+                  onAnalyze={handleAnalyze}
+                  loading={loading}
+                />
+
+                {/* Telemetry Stat Cards */}
+                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+                  <StatCard
+                    label="Corpus Size"
+                    value={analysis?.papers?.length ?? "—"}
+                    hint={
+                      analysis
+                        ? "Peer-reviewed records in current corpus"
+                        : "Loads on scientific analysis"
+                    }
+                    icon={BookOpen}
+                    tint="bg-[#e8f4ee] text-[#0b655b]"
+                  />
+                  <StatCard
+                    label="Candidate Gaps"
+                    value={analysis?.gaps?.length ?? "—"}
+                    hint={
+                      analysis
+                        ? "Underexplored questions identified"
+                        : "Extracted from literature corpus"
+                    }
+                    icon={FileSearch}
+                    tint="bg-[#edf6e6] text-[#4d7c34]"
+                  />
+                  <StatCard
+                    label="Verified Evidence"
+                    value={
+                      analysis
+                        ? analysis.gaps.reduce(
+                            (sum, g) =>
+                              sum + (g.evidence?.filter((e) => e.verified).length || 0),
+                            0
+                          )
+                        : "—"
+                    }
+                    hint="Cross-verified against source abstracts"
+                    icon={ShieldCheck}
+                    tint="bg-[#e6f3f5] text-[#1c647b]"
+                  />
+                  <StatCard
+                    label="Protocol Proposals"
+                    value={experiment ? "1" : "—"}
+                    hint="Formulated in Experiment Lab"
+                    icon={FlaskConical}
+                    tint="bg-[#fbf2e5] text-[#936423]"
+                  />
+                </div>
+
+                {/* Backend Analysis Warnings if returned */}
+                {analysis?.warnings && analysis.warnings.length > 0 && (
+                  <div className="rounded-2xl border border-amber-200 bg-amber-50/90 p-4 text-xs leading-relaxed text-amber-900 shadow-2xs">
+                    <div className="font-bold flex items-center gap-1.5 mb-1 text-amber-950">
+                      <AlertTriangle size={15} className="text-amber-600" />
+                      <span>Literature Verification Notes:</span>
+                    </div>
+                    <ul className="list-disc pl-5 space-y-1">
+                      {analysis.warnings.map((w, idx) => (
+                        <li key={idx}>{w}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {/* Latest Discovered Gaps Preview if analysis ready */}
+                {analysis ? (
+                  <section className="space-y-4">
+                    <SectionHeading
+                      title="Top Candidate Research Gaps"
+                      detail="Transparently ranked by evidence support, potential impact, and feasibility."
+                      action={
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={() => {
+                            setActive("gaps");
+                            setGapViewMode("list");
+                          }}
+                        >
+                          <span>Explore All {analysis.gaps.length} Gaps</span>
+                          <ArrowRight size={14} />
+                        </Button>
+                      }
+                    />
+                    <div className="grid gap-4 xl:grid-cols-2">
+                      {sortedGaps.slice(0, 2).map((gap, idx) => (
+                        <GapCard
+                          key={gap.id}
+                          gap={gap}
+                          index={idx}
+                          onOpen={handleOpenGap}
+                          onExperiment={handleOpenExperiment}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                ) : (
+                  /* Educational Value Pillars when empty */
+                  <section className="grid gap-4 md:grid-cols-3">
+                    <div className="rounded-2xl border border-[#dce5e0] bg-white p-5 shadow-xs">
+                      <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#eaf4ef] text-[#0b655b] mb-3">
+                        <Droplets size={20} />
+                      </div>
+                      <h4 className="text-sm font-bold text-[#14322a] font-display">
+                        Real Water Contamination Science
+                      </h4>
+                      <p className="mt-1.5 text-xs text-[#5e776d] leading-relaxed">
+                        Searches live Europe PMC for peer-reviewed studies on biosensors, heavy metals, pesticides, and portable diagnostic validation.
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-[#dce5e0] bg-white p-5 shadow-xs">
+                      <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#edf6e6] text-[#4d7c34] mb-3">
+                        <ShieldCheck size={20} />
+                      </div>
+                      <h4 className="text-sm font-bold text-[#14322a] font-display">
+                        Evidence Cross-Verification
+                      </h4>
+                      <p className="mt-1.5 text-xs text-[#5e776d] leading-relaxed">
+                        No fabricated claims. Every candidate research gap is cross-referenced against exact excerpts from retrieved abstracts.
+                      </p>
+                    </div>
+
+                    <div className="rounded-2xl border border-[#dce5e0] bg-white p-5 shadow-xs">
+                      <div className="grid h-10 w-10 place-items-center rounded-xl bg-[#e6f3f5] text-[#1c647b] mb-3">
+                        <FlaskConical size={20} />
+                      </div>
+                      <h4 className="text-sm font-bold text-[#14322a] font-display">
+                        From Gap to Lab Protocol
+                      </h4>
+                      <p className="mt-1.5 text-xs text-[#5e776d] leading-relaxed">
+                        Transform discovered gaps into testable hypotheses with controls, matrix conditions, and standard comparison methods.
+                      </p>
+                    </div>
+                  </section>
+                )}
+              </div>
+            )}
+
+            {/* VIEW 2: RESEARCH GAPS (List or Detail) */}
+            {active === "gaps" &&
+              (gapViewMode === "detail" && selectedGap ? (
+                <GapDetailView
+                  gap={selectedGap}
+                  papers={analysis?.papers || []}
+                  onBack={() => setGapViewMode("list")}
+                  onExperiment={handleOpenExperiment}
+                  onOpenPaper={handleOpenPaperModal}
+                />
+              ) : (
+                <div className="space-y-6 animate-in fade-in duration-200">
+                  <PageTitle
+                    title="Discovered Research Gaps"
+                    description="Underexplored research questions derived from retrieved literature corpus. Ranked transparently using evidence strength, impact, and feasibility."
+                    action={
+                      analysis && (
+                        <Tag tone="teal">
+                          {sortedGaps.length} Candidate Gaps
+                        </Tag>
+                      )
                     }
                   />
-                  <div className="grid gap-4 xl:grid-cols-2">
-                    {gaps.slice(0, 2).map((gap, index) => (
-                      <GapCard
-                        key={gap.id}
-                        gap={gap}
-                        index={index}
-                        onOpen={openGap}
-                        onExperiment={openExperiment}
-                      />
-                    ))}
-                  </div>
-                </section>
-              ) : (
-                <section className="grid gap-4 md:grid-cols-3">
-                  <div className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-                    <IconBox className="bg-[#eaf4ee] text-[#47836b]">
-                      <Droplets size={19} />
-                    </IconBox>
-                    <h3 className="mt-4 text-sm font-bold text-[#315548]">
-                      Start with a real question
-                    </h3>
-                    <p className="mt-2 text-xs leading-6 text-[#84948c]">
-                      Focus on a specific water-quality challenge, sensor
-                      limitation or field condition.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-                    <IconBox className="bg-[#eef3df] text-[#738c43]">
-                      <Microscope size={19} />
-                    </IconBox>
-                    <h3 className="mt-4 text-sm font-bold text-[#315548]">
-                      Inspect the evidence
-                    </h3>
-                    <p className="mt-2 text-xs leading-6 text-[#84948c]">
-                      Follow paper IDs and source passages instead of relying
-                      on unsupported AI claims.
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-[#e2e9e4] bg-white p-5">
-                    <IconBox className="bg-[#eaf2f6] text-[#4b8190]">
-                      <FlaskConical size={19} />
-                    </IconBox>
-                    <h3 className="mt-4 text-sm font-bold text-[#315548]">
-                      Plan the next study
-                    </h3>
-                    <p className="mt-2 text-xs leading-6 text-[#84948c]">
-                      Turn a candidate gap into a proposed experiment that a
-                      domain expert can review.
-                    </p>
-                  </div>
-                </section>
-              )}
-            </div>
-          )}
 
-          {active === "literature" && (
-            <div>
-              <PageTitle
-                eyebrow="Scientific sources"
-                title="Literature explorer"
-                description="Browse the paper records returned by the current analysis. Source metadata comes from the backend."
-                action={<Tag>{analysis?.papers?.length || 0} records</Tag>}
-              />
+                  {!analysis ? (
+                    <EmptyState
+                      icon={FileSearch}
+                      title="No Literature Analysis Loaded"
+                      detail="Formulate a water contamination or biosensor question in Discovery to extract candidate gaps."
+                      action={
+                        <Button onClick={() => setActive("overview")}>
+                          Go to Research Discovery
+                        </Button>
+                      }
+                    />
+                  ) : (
+                    <>
+                      {/* Analysis Summary & Sort Filter Bar */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 rounded-2xl border border-[#dce5e0] bg-white p-4 shadow-xs">
+                        <div>
+                          <span className="text-[10px] font-bold uppercase tracking-wider text-[#698478] block">
+                            Active Research Query
+                          </span>
+                          <p className="text-xs sm:text-sm font-bold text-[#102a24] mt-0.5">
+                            “{analysis.question}”
+                          </p>
+                        </div>
 
-              {!analysis ? (
-                <EmptyState
-                  title="No literature loaded"
-                  detail="Run a research analysis from Overview to retrieve papers for this question."
+                        <div className="flex items-center gap-2">
+                          <SlidersHorizontal size={14} className="text-[#698478]" />
+                          <select
+                            value={sortGapsBy}
+                            onChange={(e) => setSortGapsBy(e.target.value)}
+                            className="rounded-xl border border-[#dce5e0] bg-[#f8faf8] px-3 py-1.5 text-xs font-semibold text-[#14322a] outline-none focus:border-[#0b655b]"
+                          >
+                            <option value="priority">Sort: Priority Score (High to Low)</option>
+                            <option value="evidence">Sort: Supporting Paper Count</option>
+                            <option value="original">Sort: Corpus Order</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      {/* Candidate Gaps Grid */}
+                      <div className="grid gap-4 xl:grid-cols-2">
+                        {sortedGaps.map((gap, index) => (
+                          <GapCard
+                            key={gap.id}
+                            gap={gap}
+                            index={index}
+                            onOpen={handleOpenGap}
+                            onExperiment={handleOpenExperiment}
+                          />
+                        ))}
+                      </div>
+
+                      {sortedGaps.length === 0 && (
+                        <EmptyState
+                          icon={FileSearch}
+                          title="No Gaps Identified"
+                          detail="The model did not identify confident gaps in this corpus. Try broadening your research question."
+                        />
+                      )}
+                    </>
+                  )}
+                </div>
+              ))}
+
+            {/* VIEW 3: LITERATURE EXPLORER */}
+            {active === "literature" && (
+              <div className="space-y-6 animate-in fade-in duration-200">
+                <PageTitle
+                  title="Literature Explorer"
+                  description="Peer-reviewed research records retrieved from Europe PMC. Filter records or search literature directly."
                   action={
-                    <Button onClick={() => setActive("overview")}>
-                      Go to overview
-                    </Button>
+                    <Tag tone="teal">
+                      {displayPapers.length} Records Available
+                    </Tag>
                   }
                 />
-              ) : (
-                <>
-                  <div className="mb-5 flex flex-col gap-3 sm:flex-row">
+
+                {/* Filter and Direct Search Bar */}
+                <div className="space-y-3">
+                  <div className="flex flex-col sm:flex-row gap-2.5">
                     <div className="relative flex-1">
                       <Search
-                        size={16}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 text-[#91a098]"
+                        size={15}
+                        className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#7b988c]"
                       />
                       <input
+                        type="text"
                         value={paperFilter}
                         onChange={(e) => setPaperFilter(e.target.value)}
-                        placeholder="Filter by title, abstract or author..."
-                        className="w-full rounded-xl border border-[#dfe8e1] bg-white py-3 pl-9 pr-4 text-sm outline-none focus:border-[#8ebaa7]"
+                        placeholder="Filter corpus by title, author, or abstract keywords..."
+                        className="w-full rounded-2xl border border-[#dce5e0] bg-white py-2.5 pl-10 pr-4 text-xs sm:text-sm outline-none focus:border-[#0b655b] focus:ring-2 focus:ring-[#0b655b]/10 shadow-xs"
                       />
                     </div>
-                    <Button
-                      variant="secondary"
-                      onClick={() => setPaperFilter("")}
-                    >
-                      <RefreshCw size={14} /> Clear filter
-                    </Button>
+                    {paperFilter && (
+                      <Button
+                        variant="secondary"
+                        size="sm"
+                        onClick={() => setPaperFilter("")}
+                      >
+                        <RefreshCw size={13} /> Clear Filter
+                      </Button>
+                    )}
                   </div>
 
+                  {/* Direct live search input */}
+                  <form
+                    onSubmit={handleDirectSearch}
+                    className="flex flex-col sm:flex-row items-center gap-2.5 rounded-2xl border border-[#dce5e0] bg-[#f8faf8] p-3 shadow-2xs"
+                  >
+                    <span className="text-xs font-semibold text-[#506e62] flex items-center gap-1.5 shrink-0">
+                      <BookOpen size={14} className="text-[#0b655b]" />
+                      Query Europe PMC directly:
+                    </span>
+                    <input
+                      type="text"
+                      value={directSearchQuery}
+                      onChange={(e) => setDirectSearchQuery(e.target.value)}
+                      placeholder="e.g. biosensor arsenic drinking water"
+                      className="flex-1 rounded-xl border border-[#dfe7e2] bg-white px-3 py-1.5 text-xs outline-none focus:border-[#0b655b]"
+                    />
+                    <Button
+                      type="submit"
+                      size="sm"
+                      variant="primary"
+                      loading={directSearchLoading}
+                      disabled={directSearchQuery.trim().length < 3}
+                    >
+                      Search Europe PMC
+                    </Button>
+                    {directSearchResults && (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="ghost"
+                        onClick={() => setDirectSearchResults(null)}
+                      >
+                        Reset to Analysis Corpus
+                      </Button>
+                    )}
+                  </form>
+                </div>
+
+                {/* Papers Grid */}
+                {displayPapers.length > 0 ? (
                   <div className="grid gap-4 xl:grid-cols-2">
-                    {papers.map((paper) => (
+                    {displayPapers.map((paper) => (
                       <PaperCard
-                        key={paper.id}
+                        key={paper.id || paper.paper_id}
                         paper={paper}
-                        onOpen={openPaper}
+                        onOpen={handleOpenPaperModal}
                       />
                     ))}
                   </div>
+                ) : (
+                  <EmptyState
+                    icon={BookOpen}
+                    title="No Matching Papers Found"
+                    detail={
+                      analysis
+                        ? "Try adjusting your filter keywords or clearing the search."
+                        : "Run a research analysis from Discovery or query Europe PMC directly."
+                    }
+                  />
+                )}
+              </div>
+            )}
 
-                  {!papers.length && (
-                    <EmptyState
-                      title="No matching papers"
-                      detail="Try a shorter search term or clear the filter."
-                    />
-                  )}
-                </>
-              )}
-            </div>
-          )}
-
-          {active === "gaps" &&
-            (view === "detail" && selectedGap ? (
-              <EvidenceView
-                gap={selectedGap}
-                papers={analysis?.papers || []}
-                onBack={() => setView("list")}
-                onExperiment={openExperiment}
-              />
-            ) : (
-              <div>
+            {/* VIEW 4: EVIDENCE GRAPH */}
+            {active === "graph" && (
+              <div className="space-y-6 animate-in fade-in duration-200">
                 <PageTitle
-                  eyebrow="AI-assisted literature synthesis"
-                  title="Candidate research gaps"
-                  description="Prioritized questions derived from the retrieved corpus. A candidate gap is not proof that a topic has never been studied."
-                  action={
-                    analysis && <Tag tone="dark">{gaps.length} candidates</Tag>
-                  }
+                  title="Evidence Relationship Graph"
+                  description="Interactive force-directed graph connecting retrieved literature nodes to candidate research gaps using verified backend relationships."
                 />
 
                 {!analysis ? (
                   <EmptyState
-                    title="No analysis to review"
-                    detail="Enter a research question and analyze the literature first."
+                    icon={Network}
+                    title="No Evidence Graph Available"
+                    detail="Run a question analysis to generate paper-to-gap relationships."
                     action={
                       <Button onClick={() => setActive("overview")}>
-                        Start an analysis
+                        Start an Analysis
                       </Button>
                     }
                   />
                 ) : (
-                  <>
-                    {analysis.warnings?.length > 0 && (
-                      <div className="mb-5 flex gap-3 rounded-xl border border-amber-200 bg-amber-50 p-4 text-xs leading-5 text-amber-800">
-                        <AlertTriangle size={16} className="mt-0.5 shrink-0" />
-                        <p>{analysis.warnings.join(" ")}</p>
-                      </div>
-                    )}
-
-                    <div className="mb-5 flex flex-col gap-3 rounded-2xl border border-[#e2e9e4] bg-white p-4 sm:flex-row sm:items-center sm:justify-between">
-                      <div>
-                        <div className="text-[10px] font-bold uppercase tracking-[0.16em] text-[#8ba097]">
-                          Analyzed question
-                        </div>
-                        <p className="mt-1 text-sm font-semibold leading-6 text-[#315549]">
-                          {analysis.question}
-                        </p>
-                      </div>
-                      <label className="flex items-center gap-2 text-xs text-[#73867c]">
-                        <SlidersHorizontal size={14} />
-                        <select
-                          value={sort}
-                          onChange={(e) => setSort(e.target.value)}
-                          className="rounded-lg border border-[#e0e8e1] bg-white px-3 py-2 text-xs text-[#4b6c5d] outline-none"
-                        >
-                          <option value="priority">Sort: priority score</option>
-                          <option value="evidence">Sort: supporting papers</option>
-                          <option value="original">Original order</option>
-                        </select>
-                      </label>
-                    </div>
-
-                    <div className="grid gap-4 xl:grid-cols-2">
-                      {gaps.map((gap, index) => (
-                        <GapCard
-                          key={gap.id}
-                          gap={gap}
-                          index={index}
-                          onOpen={openGap}
-                          onExperiment={openExperiment}
-                        />
-                      ))}
-                    </div>
-
-                    {!gaps.length && (
-                      <EmptyState
-                        title="No candidate gaps returned"
-                        detail="The available literature may be insufficient. Try a more focused or broader question."
-                      />
-                    )}
-                  </>
+                  <EvidenceGraph
+                    analysisId={analysis.analysis_id}
+                    onOpenPaper={handleOpenPaperModal}
+                    onOpenGap={handleOpenGap}
+                    onProposeExperiment={handleOpenExperiment}
+                  />
                 )}
               </div>
-            ))}
+            )}
 
-          {active === "graph" && (
-            <EvidenceMap analysis={analysis} onOpenGap={openGap} />
-          )}
+            {/* VIEW 5: EXPERIMENT LAB */}
+            {active === "experiment" && (
+              <div className="animate-in fade-in duration-200">
+                <ExperimentView
+                  gap={selectedGap}
+                  experiment={experiment}
+                  loading={experimentLoading}
+                  error={experimentError}
+                  onGenerate={() => handleOpenExperiment(selectedGap)}
+                  onOpenGap={() => {
+                    setActive("gaps");
+                    setGapViewMode("list");
+                  }}
+                />
+              </div>
+            )}
+          </main>
+        </div>
 
-          {active === "experiment" && (
-            <ExperimentPage
-              gap={selectedGap}
-              experiment={experiment}
-              loading={experimentLoading}
-              error={experimentError}
-              onGenerate={() => openExperiment(selectedGap)}
-              onCopy={copyExperiment}
-            />
-          )}
-
-          <footer className="mt-10 flex flex-col justify-between gap-2 border-t border-[#e1e8e2] pt-5 text-[10px] leading-5 text-[#9aa79f] sm:flex-row">
-            <span>ResearchRadar AI · BioSolve Hackathon</span>
-            <span>
-              AI-assisted discovery · Source evidence matters · Expert review
-              required
-            </span>
-          </footer>
-        </main>
+        {/* Global Footer */}
+        <footer className="mt-12 border-t border-[#dce5e0] bg-[#f8faf8] px-4 py-5 text-[11px] text-[#789286] sm:px-9">
+          <div className="mx-auto max-w-[1460px] flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="flex items-center gap-2">
+              <span className="font-bold text-[#102a24]">ResearchRadar AI</span>
+            </div>
+            <div>
+              Real Literature • Transparent Scoring
+            </div>
+          </div>
+        </footer>
       </div>
+
+      {/* Paper Detail Modal */}
+      <PaperDetailModal
+        paper={selectedPaper}
+        isOpen={isPaperModalOpen}
+        onClose={() => setIsPaperModalOpen(false)}
+      />
     </div>
   );
 }

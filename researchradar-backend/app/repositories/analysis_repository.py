@@ -99,6 +99,32 @@ def get_analysis(analysis_id: str) -> Optional[dict[str, Any]]:
         return None
 
 
+def get_all_analyses(limit: int = 10) -> list[dict[str, Any]]:
+    try:
+        init_db()
+        with sqlite3.connect(DB_PATH) as conn:
+            cursor = conn.cursor()
+            cursor.execute(
+                "SELECT analysis_id, question, created_at, papers_json, gaps_json, warnings_json FROM analyses ORDER BY created_at DESC LIMIT ?",
+                (limit,),
+            )
+            results = []
+            for row in cursor.fetchall():
+                results.append({
+                    "analysis_id": row[0],
+                    "question": row[1],
+                    "created_at": row[2],
+                    "papers_analyzed": len(json.loads(row[3])),
+                    "papers": json.loads(row[3]),
+                    "gaps": json.loads(row[4]),
+                    "warnings": json.loads(row[5]),
+                })
+            return results
+    except Exception as exc:
+        logger.error("Failed to read analyses from SQLite: %s", str(exc))
+        return []
+
+
 def save_experiment(analysis_id: str, gap_id: str, experiment_data: dict[str, Any]) -> None:
     try:
         init_db()
@@ -139,7 +165,6 @@ def get_experiment(analysis_id: str, gap_id: str) -> Optional[dict[str, Any]]:
 
 
 def get_gap_by_id(gap_id: str, analysis_id: Optional[str] = None) -> Optional[dict[str, Any]]:
-    # If analysis_id is provided, look in that analysis
     if analysis_id:
         analysis = get_analysis(analysis_id)
         if analysis:
@@ -148,7 +173,6 @@ def get_gap_by_id(gap_id: str, analysis_id: Optional[str] = None) -> Optional[di
                     return {"gap": gap, "analysis_id": analysis_id, "question": analysis.get("question")}
         return None
 
-    # Search in all cached or stored analyses
     for aid, a in ANALYSIS_CACHE.items():
         for gap in a.get("gaps", []):
             if gap.get("id") == gap_id:

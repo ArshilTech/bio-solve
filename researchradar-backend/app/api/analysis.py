@@ -2,7 +2,7 @@ from uuid import uuid4
 from fastapi import APIRouter, HTTPException
 from app.schemas.requests import AnalyzeRequest
 from app.services.gap_analyzer import analyze_research_question
-from app.repositories.analysis_repository import save_analysis
+from app.repositories.analysis_repository import save_analysis, get_analysis, get_all_analyses
 from app.utils.logging import logger
 
 router = APIRouter(tags=["Analysis"])
@@ -39,3 +39,19 @@ async def analyze(request: AnalyzeRequest):
             status_code=502,
             detail="Scientific literature analysis failed. Please verify your query or retry.",
         ) from exc
+
+
+@router.get("/analysis")
+def list_analyses(limit: int = 10):
+    return get_all_analyses(limit=limit)
+
+
+@router.get("/analysis/{analysis_id}")
+def get_analysis_by_id(analysis_id: str):
+    data = get_analysis(analysis_id)
+    if not data:
+        raise HTTPException(
+            status_code=404,
+            detail=f"Analysis '{analysis_id}' was not found.",
+        )
+    return data
