@@ -1,0 +1,1560 @@
+[
+  {
+    "id": "42783141",
+    "source": "MED",
+    "pmid": "42783141",
+    "pmcid": "PMC13604867",
+    "fullTextIdList": {
+      "fullTextId": [
+        "PMC13604867"
+      ]
+    },
+    "doi": "10.3390/bios16090474",
+    "title": "Research Advances and Future Perspectives of Point-of-Care Detection Technologies and Biosensors for Mosquito-Borne Viruses.",
+    "authorString": "Bian E, Wang R, Yin K, Ding X.",
+    "authorList": {
+      "author": [
+        {
+          "fullName": "Bian E",
+          "lastName": "Bian",
+          "firstName": "Erkang",
+          "initials": "E",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0009-0000-4893-6770"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Key Laboratory of Environmental Medicine and Engineering, Ministry of Education, Department of Nutrition and Food Hygiene, School of Public Health, Southeast University, Nanjing 210009, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Wang R",
+          "lastName": "Wang",
+          "firstName": "Ruohang",
+          "initials": "R",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Key Laboratory of Environmental Medicine and Engineering, Ministry of Education, Department of Nutrition and Food Hygiene, School of Public Health, Southeast University, Nanjing 210009, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Yin K",
+          "lastName": "Yin",
+          "firstName": "Kun",
+          "initials": "K",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "School of Global Health, Chinese Center for Tropical Diseases Research, Shanghai Jiao Tong University School of Medicine, Shanghai 200025, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Ding X",
+          "lastName": "Ding",
+          "firstName": "Xiong",
+          "initials": "X",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0003-0437-0589"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Key Laboratory of Environmental Medicine and Engineering, Ministry of Education, Department of Nutrition and Food Hygiene, School of Public Health, Southeast University, Nanjing 210009, China."
+              },
+              {
+                "affiliation": "Southeast University Suzhou Research Institute, Suzhou 215123, China."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "authorIdList": {
+      "authorId": [
+        {
+          "type": "ORCID",
+          "value": "0000-0003-0437-0589"
+        },
+        {
+          "type": "ORCID",
+          "value": "0009-0000-4893-6770"
+        }
+      ]
+    },
+    "dataLinksTagsList": {
+      "dataLinkstag": [
+        "supporting_data"
+      ]
+    },
+    "journalInfo": {
+      "issue": "9",
+      "volume": "16",
+      "journalIssueId": 4270295,
+      "dateOfPublication": "2026 Aug",
+      "monthOfPublication": 8,
+      "yearOfPublication": 2026,
+      "journal": {
+        "medlineAbbreviation": "Biosensors (Basel)",
+        "title": "Biosensors",
+        "essn": "2079-6374",
+        "issn": "2079-6374",
+        "isoabbreviation": "Biosensors (Basel)",
+        "nlmid": "101609191"
+      },
+      "printPublicationDate": "2026-08-01"
+    },
+    "pubYear": "2026",
+    "pageInfo": "474",
+    "abstractText": "Mosquito-borne viruses, including dengue, Zika and chikungunya viruses, place a substantial burden on diagnostic services, especially where molecular laboratories are inaccessible or slow to return results. Point-of-care biosensors could reduce turnaround times and bring testing closer to patients in primary care, outbreak response, and field settings. This review critically examines nucleic acid amplification, CRISPR-assisted assays, lateral-flow platforms, microfluidic systems, electrochemical and optical biosensors, paper-based devices, and smartphone-enabled readouts. These technologies are evaluated in terms of sample preparation, analytical sensitivity and specificity, matrix interference, multiplexing, workflow integration, cost, and clinical validation. Overall, nucleic-acid-amplification and CRISPR-assisted platforms often achieve low reported detection limits under controlled conditions; lateral-flow and paper-based devices offer relatively simple and minimally instrumented workflows; and microfluidic, electrochemical, and smartphone-enabled systems support increasing levels of workflow integration, quantitative readout, and connectivity. However, few platforms currently integrate these advantages into a fully integrated and clinically validated \"sample-to-result\" workflow. Due to sample heterogeneity, viral strains, reference methods, assay conditions, and disparities in reporting practices, conducting meaningful cross-study comparisons remains challenging. Limited comparisons and insufficient prospective clinical and field validation further restrict the assessment of practical diagnostic utility. Therefore, strong analytical performance alone should not be interpreted as evidence of clinical validity. Priority directions include unified definitions of performance and reporting units, standardized validation protocols and external quality assessment, prospective multi-site evaluation using representative populations and specimens, and earlier consideration of manufacturing scalability, reagent stability, quality systems, and applicable regulatory requirements. Future platforms should integrate simplified sample preparation, multiplex detection, objective digital or AI-assisted interpretation, and secure connectivity while demonstrating measurable benefits for patient management and outbreak surveillance.",
+    "affiliation": "Key Laboratory of Environmental Medicine and Engineering, Ministry of Education, Department of Nutrition and Food Hygiene, School of Public Health, Southeast University, Nanjing 210009, China.",
+    "publicationStatus": "epublish",
+    "language": "eng",
+    "pubModel": "Electronic",
+    "pubTypeList": {
+      "pubType": [
+        "review-article",
+        "Review",
+        "Journal Article"
+      ]
+    },
+    "grantsList": {
+      "grant": [
+        {
+          "agency": "Southeast University",
+          "grantId": "4060692202/023",
+          "orderIn": 0
+        },
+        {
+          "agency": "the Social Development Research Program of Jiangsu Province Science and Technology Department",
+          "grantId": "BE2023725",
+          "orderIn": 0
+        }
+      ]
+    },
+    "meshHeadingList": {
+      "meshHeading": [
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Animals"
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Humans"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Culicidae",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "VI",
+                "qualifierName": "virology"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Nucleic Acid Amplification Techniques"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Biosensing Techniques"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Point-of-Care Systems"
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Rapid Diagnostic Tests"
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Mosquito-Borne Diseases"
+        }
+      ]
+    },
+    "keywordList": {
+      "keyword": [
+        "Biosensors",
+        "Nucleic Acid Amplification",
+        "Point-of-care Testing",
+        "Electrochemical Biosensors",
+        "Mosquito-borne Viruses",
+        "Crispr Diagnostics",
+        "Lateral-flow Assays",
+        "Microfluidics Biosensors"
+      ]
+    },
+    "subsetList": {
+      "subset": [
+        {
+          "code": "IM",
+          "name": "Index Medicus"
+        }
+      ]
+    },
+    "fullTextUrlList": {
+      "fullTextUrl": [
+        {
+          "availability": "Subscription required",
+          "availabilityCode": "S",
+          "documentStyle": "doi",
+          "site": "DOI",
+          "url": "https://doi.org/10.3390/bios16090474"
+        },
+        {
+          "availability": "Open access",
+          "availabilityCode": "OA",
+          "documentStyle": "html",
+          "site": "Europe_PMC",
+          "url": "https://europepmc.org/articles/PMC13604867"
+        },
+        {
+          "availability": "Open access",
+          "availabilityCode": "OA",
+          "documentStyle": "pdf",
+          "site": "Europe_PMC",
+          "url": "https://europepmc.org/articles/PMC13604867?pdf=render"
+        }
+      ]
+    },
+    "isOpenAccess": "Y",
+    "inEPMC": "Y",
+    "inPMC": "Y",
+    "citedByCount": 0,
+    "hasReferences": "Y",
+    "hasTextMinedTerms": "Y",
+    "hasDbCrossReferences": "N",
+    "hasPDF": "Y",
+    "hasBook": "N",
+    "hasSuppl": "N",
+    "hasLabsLinks": "N",
+    "hasData": "Y",
+    "license": "cc by",
+    "authMan": "N",
+    "epmcAuthMan": "N",
+    "nihAuthMan": "N",
+    "hasTMAccessionNumbers": "Y",
+    "tmAccessionTypeList": {
+      "accessionType": [
+        "doi"
+      ]
+    },
+    "dateOfCompletion": "2026-09-24",
+    "dateOfCreation": "2026-09-24",
+    "dateOfRevision": "2026-09-26",
+    "electronicPublicationDate": "2026-08-29",
+    "firstPublicationDate": "2026-08-29",
+    "firstIndexDate": "2026-09-25",
+    "fullTextReceivedDate": "2026-09-25",
+    "hasEvaluations": "N"
+  },
+  {
+    "id": "42535361",
+    "source": "MED",
+    "pmid": "42535361",
+    "doi": "10.1039/d6cc00745g",
+    "title": "Matrix-first benchmarking of biosensors for multi-hazard monitoring: bacteria, viruses, and pesticides in food and water.",
+    "authorString": "Mishra KK, Singh S, Phan B, Tummala SS, Kokala A, Kumar S, Singh P, Prasad S.",
+    "authorList": {
+      "author": [
+        {
+          "fullName": "Mishra KK",
+          "lastName": "Mishra",
+          "firstName": "Kundan Kumar",
+          "initials": "KK",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Singh S",
+          "lastName": "Singh",
+          "firstName": "Shashwat",
+          "initials": "S",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Phan B",
+          "lastName": "Phan",
+          "firstName": "Brandon",
+          "initials": "B",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Tummala SS",
+          "lastName": "Tummala",
+          "firstName": "Sri Sai",
+          "initials": "SS",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0009-0004-8090-4575"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Kokala A",
+          "lastName": "Kokala",
+          "firstName": "Abhinav",
+          "initials": "A",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0009-0006-8808-4086"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Kumar S",
+          "lastName": "Kumar",
+          "firstName": "Sushil",
+          "initials": "S",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Indian Institute of Technology Delhi, India."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Singh P",
+          "lastName": "Singh",
+          "firstName": "Preeti",
+          "initials": "P",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Prasad S",
+          "lastName": "Prasad",
+          "firstName": "Shalini",
+          "initials": "S",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0002-2404-3801"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "authorIdList": {
+      "authorId": [
+        {
+          "type": "ORCID",
+          "value": "0000-0002-2404-3801"
+        },
+        {
+          "type": "ORCID",
+          "value": "0009-0004-8090-4575"
+        },
+        {
+          "type": "ORCID",
+          "value": "0009-0006-8808-4086"
+        }
+      ]
+    },
+    "journalInfo": {
+      "issue": "65",
+      "volume": "62",
+      "journalIssueId": 4245923,
+      "dateOfPublication": "2026 Aug",
+      "monthOfPublication": 8,
+      "yearOfPublication": 2026,
+      "journal": {
+        "medlineAbbreviation": "Chem Commun (Camb)",
+        "title": "Chemical communications (Cambridge, England)",
+        "essn": "1364-548X",
+        "issn": "1359-7345",
+        "isoabbreviation": "Chem Commun (Camb)",
+        "nlmid": "9610838"
+      },
+      "printPublicationDate": "2026-08-01"
+    },
+    "pubYear": "2026",
+    "pageInfo": "16115-16139",
+    "abstractText": "Biosensors are pivotal for detecting foodborne and waterborne hazards due to their portability, low cost, and rapid response. However, performance often degrades in real samples, where complex matrices reduce sensitivity and specificity and increase false positives/negatives. This systematic review synthesizes recent advances in biosensor platforms for monitoring contaminants in food and water, emphasizing how matrix properties govern analytical reliability and field usability. We present a matrix-first benchmarking perspective that compares biosensor performance across low-biomass waters, high-organic wastewater, and complex food extracts (high fat/protein, high particulate load, acidic, or high-salt), and summarizes dominant interference modes (fouling, nonspecific binding, ionic-strength shifts, and optical turbidity) alongside practical mitigation workflows (dilution/filtration, cleanup extraction, antifouling coatings, and microfluidic preconcentration). Beyond bacteria and viruses, this revision integrates pesticides as a third hazard class, covering enzyme-inhibition, aptamer, immuno-, and molecularly imprinted polymer sensing strategies, with representative case studies including glyphosate/AMPA, paraquat/diquat, chlorpyrifos, and atrazine. Overall, the matrix-first framework highlights design and workflow choices most likely to translate biosensors from proof-of-concept to deployable, multi-hazard monitoring tools for food and water safety.",
+    "affiliation": "Department of Bioengineering, University of Texas at Dallas, Richardson, TX 75080, USA. shalini.prasad@utdallas.edu.",
+    "publicationStatus": "epublish",
+    "language": "eng",
+    "pubModel": "Electronic",
+    "pubTypeList": {
+      "pubType": [
+        "Review",
+        "Journal Article"
+      ]
+    },
+    "meshHeadingList": {
+      "meshHeading": [
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Bacteria",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "IP",
+                "qualifierName": "isolation & purification"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Viruses",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "IP",
+                "qualifierName": "isolation & purification"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Pesticides",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "AN",
+                "qualifierName": "analysis"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Water Pollutants, Chemical",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "AN",
+                "qualifierName": "analysis"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Biosensing Techniques"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Food Contamination",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "AN",
+                "qualifierName": "analysis"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Benchmarking"
+        }
+      ]
+    },
+    "chemicalList": {
+      "chemical": [
+        {
+          "name": "Pesticides",
+          "registryNumber": "0"
+        },
+        {
+          "name": "Water Pollutants, Chemical",
+          "registryNumber": "0"
+        }
+      ]
+    },
+    "subsetList": {
+      "subset": [
+        {
+          "code": "IM",
+          "name": "Index Medicus"
+        }
+      ]
+    },
+    "fullTextUrlList": {
+      "fullTextUrl": [
+        {
+          "availability": "Subscription required",
+          "availabilityCode": "S",
+          "documentStyle": "doi",
+          "site": "DOI",
+          "url": "https://doi.org/10.1039/d6cc00745g"
+        }
+      ]
+    },
+    "isOpenAccess": "N",
+    "inEPMC": "N",
+    "inPMC": "N",
+    "citedByCount": 0,
+    "hasReferences": "Y",
+    "hasTextMinedTerms": "Y",
+    "hasDbCrossReferences": "N",
+    "hasPDF": "N",
+    "hasBook": "N",
+    "hasSuppl": "N",
+    "hasLabsLinks": "N",
+    "hasData": "N",
+    "authMan": "N",
+    "epmcAuthMan": "N",
+    "nihAuthMan": "N",
+    "hasTMAccessionNumbers": "N",
+    "dateOfCompletion": "2026-08-20",
+    "dateOfCreation": "2026-07-31",
+    "dateOfRevision": "2026-08-20",
+    "electronicPublicationDate": "2026-08-20",
+    "firstPublicationDate": "2026-08-20",
+    "firstIndexDate": "2026-08-02",
+    "hasEvaluations": "N"
+  },
+  {
+    "id": "42075335",
+    "source": "MED",
+    "pmid": "42075335",
+    "pmcid": "PMC13119226",
+    "fullTextIdList": {
+      "fullTextId": [
+        "PMC13119226"
+      ]
+    },
+    "doi": "10.3390/microorganisms14040939",
+    "title": "Progress of Rapid Detection Technology for Aquatic Microorganisms: A Comprehensive Review.",
+    "authorString": "Liu Q, Qiu Z, Yao M, Jiao B, Zhou Y, Li C, Liu H, Xin L.",
+    "authorList": {
+      "author": [
+        {
+          "fullName": "Liu Q",
+          "lastName": "Liu",
+          "firstName": "Qin",
+          "initials": "Q",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0002-2549-3425"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "College of Agricultural Engineering, Guangxi Vocational University of Agriculture, Nanning 530007, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Qiu Z",
+          "lastName": "Qiu",
+          "firstName": "Zhuangzhuang",
+          "initials": "Z",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "School of Public Health, Jining Medical University, Jining 272002, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Yao M",
+          "lastName": "Yao",
+          "firstName": "Mengli",
+          "initials": "M",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "School of Public Health, Jining Medical University, Jining 272002, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Jiao B",
+          "lastName": "Jiao",
+          "firstName": "Boyan",
+          "initials": "B",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Department of Laboratory, Jining Center for Disease Control and Prevention, Jining 272000, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Zhou Y",
+          "lastName": "Zhou",
+          "firstName": "Yu",
+          "initials": "Y",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "School of Public Health, Jining Medical University, Jining 272002, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Li C",
+          "lastName": "Li",
+          "firstName": "Chenghua",
+          "initials": "C",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0003-2978-8762"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "College of Marine Science, Ningbo University, Ningbo 315832, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Liu H",
+          "lastName": "Liu",
+          "firstName": "Haipeng",
+          "initials": "H",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "College of Ocean and Earth Sciences, Xiamen University, Xiamen 361005, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Xin L",
+          "lastName": "Xin",
+          "firstName": "Lusheng",
+          "initials": "L",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0002-0131-7697"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "School of Public Health, Jining Medical University, Jining 272002, China."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "authorIdList": {
+      "authorId": [
+        {
+          "type": "ORCID",
+          "value": "0000-0002-0131-7697"
+        },
+        {
+          "type": "ORCID",
+          "value": "0000-0002-2549-3425"
+        },
+        {
+          "type": "ORCID",
+          "value": "0000-0003-2978-8762"
+        }
+      ]
+    },
+    "dataLinksTagsList": {
+      "dataLinkstag": [
+        "altmetrics",
+        "supporting_data"
+      ]
+    },
+    "journalInfo": {
+      "issue": "4",
+      "volume": "14",
+      "journalIssueId": 4188748,
+      "dateOfPublication": "2026 Apr",
+      "monthOfPublication": 4,
+      "yearOfPublication": 2026,
+      "journal": {
+        "medlineAbbreviation": "Microorganisms",
+        "title": "Microorganisms",
+        "essn": "2076-2607",
+        "issn": "2076-2607",
+        "isoabbreviation": "Microorganisms",
+        "nlmid": "101625893"
+      },
+      "printPublicationDate": "2026-04-01"
+    },
+    "pubYear": "2026",
+    "pageInfo": "939",
+    "abstractText": "Microbial contamination in aquatic environments poses severe threats to aquaculture sustainability, ecological balance and public health. Traditional culture-based detection methods, while standardized, are time-consuming and labor-intensive, often failing to meet the urgent need for rapid on-site monitoring required to prevent disease outbreaks and manage water quality effectively. By integrating latest research advances (2020-2025), this study reviews advances in rapid detection technologies for aquatic microorganisms, including the evolution of nucleic acid amplification strategies, with a focused comparison of the analytical sensitivity and field deployability of quantitative polymerase chain reaction (qPCR) and mainstream isothermal amplification techniques (loop-mediated isothermal amplification, LAMP; recombinase polymerase amplification, RPA). Furthermore, this study reports on the emergence of Clustered Regularly Interspaced Short Palindromic Repeat (CRISPR)-associated protein (Cas) systems as next-generation diagnostic tools, highlighting their integration with microfluidic Lab-on-a-Chip (LOC) platforms to achieve attomolar sensitivity. We also consider the application of portable nanopore sequencing for real-time pathogen identification and the growing role of Artificial Intelligence (AI) in analyzing complex diagnostic datasets. Advanced molecular methods have achieved significant reductions in time consumption-from days to less than one hour-while challenges regarding sample preparation and environmental matrix inhibition remain. The future of aquatic monitoring lies in integrated, automated systems that combine the specificity of CRISPR-Cas diagnostics with the connectivity of IoT-enabled biosensors. Comparative analysis indicates that isothermal amplification methods (LAMP, RPA) coupled with CRISPR-Cas systems offer the optimal balance of sensitivity, speed, and field deployability for point-of-care aquaculture diagnostics, while qPCR/dPCR remain indispensable for quantitative regulatory applications. We propose a structured technology selection framework to guide researchers and practitioners in choosing appropriate detection modalities based on specific sensitivity, cost, throughput, and deployment requirements.",
+    "affiliation": "College of Agricultural Engineering, Guangxi Vocational University of Agriculture, Nanning 530007, China.",
+    "publicationStatus": "epublish",
+    "language": "eng",
+    "pubModel": "Electronic",
+    "pubTypeList": {
+      "pubType": [
+        "review-article",
+        "Review",
+        "Journal Article"
+      ]
+    },
+    "grantsList": {
+      "grant": [
+        {
+          "agency": "the Ministry of Science and Technology of the People's Republic of China, Shandong Provincial University Youth Innovation Team Project",
+          "grantId": "2024KJN029",
+          "orderIn": 0
+        },
+        {
+          "agency": "National Key Research and Development Program of China",
+          "grantId": "No. 2023YFD2403000",
+          "orderIn": 0
+        }
+      ]
+    },
+    "keywordList": {
+      "keyword": [
+        "Microorganisms",
+        "Aquatic environment",
+        "Detection method",
+        "Nucleic Acid Level"
+      ]
+    },
+    "fullTextUrlList": {
+      "fullTextUrl": [
+        {
+          "availability": "Subscription required",
+          "availabilityCode": "S",
+          "documentStyle": "doi",
+          "site": "DOI",
+          "url": "https://doi.org/10.3390/microorganisms14040939"
+        },
+        {
+          "availability": "Open access",
+          "availabilityCode": "OA",
+          "documentStyle": "html",
+          "site": "Europe_PMC",
+          "url": "https://europepmc.org/articles/PMC13119226"
+        },
+        {
+          "availability": "Open access",
+          "availabilityCode": "OA",
+          "documentStyle": "pdf",
+          "site": "Europe_PMC",
+          "url": "https://europepmc.org/articles/PMC13119226?pdf=render"
+        }
+      ]
+    },
+    "isOpenAccess": "Y",
+    "inEPMC": "Y",
+    "inPMC": "Y",
+    "citedByCount": 1,
+    "hasReferences": "Y",
+    "hasTextMinedTerms": "Y",
+    "hasDbCrossReferences": "N",
+    "hasPDF": "Y",
+    "hasBook": "N",
+    "hasSuppl": "N",
+    "hasLabsLinks": "Y",
+    "hasData": "Y",
+    "license": "cc by",
+    "authMan": "N",
+    "epmcAuthMan": "N",
+    "nihAuthMan": "N",
+    "hasTMAccessionNumbers": "Y",
+    "tmAccessionTypeList": {
+      "accessionType": [
+        "doi"
+      ]
+    },
+    "dateOfCompletion": "2026-05-04",
+    "dateOfCreation": "2026-05-04",
+    "dateOfRevision": "2026-08-13",
+    "electronicPublicationDate": "2026-04-21",
+    "firstPublicationDate": "2026-04-21",
+    "firstIndexDate": "2026-05-13",
+    "fullTextReceivedDate": "2026-05-18",
+    "hasEvaluations": "N"
+  },
+  {
+    "id": "42783150",
+    "source": "MED",
+    "pmid": "42783150",
+    "pmcid": "PMC13604611",
+    "fullTextIdList": {
+      "fullTextId": [
+        "PMC13604611"
+      ]
+    },
+    "doi": "10.3390/bios16090483",
+    "title": "Microfluidic-Integrated CRISPR-Cas Biosensor for Marine Pollutant and Pathogen Monitoring: A Review.",
+    "authorString": "Ali NB, Xiao Y, Jin K, Wang Y, Zhao Y.",
+    "authorList": {
+      "author": [
+        {
+          "fullName": "Ali NB",
+          "lastName": "Ali",
+          "firstName": "Natalia Binti",
+          "initials": "NB",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0009-0003-2432-2231"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Medical School, Tianjin University, Tianjin 300072, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Xiao Y",
+          "lastName": "Xiao",
+          "firstName": "Yuting",
+          "initials": "Y",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Medical School, Tianjin University, Tianjin 300072, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Jin K",
+          "lastName": "Jin",
+          "firstName": "Kuiyu",
+          "initials": "K",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0009-0004-7290-2596"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Medical School, Tianjin University, Tianjin 300072, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Wang Y",
+          "lastName": "Wang",
+          "firstName": "Yixuan",
+          "initials": "Y",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Medical School, Tianjin University, Tianjin 300072, China."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Zhao Y",
+          "lastName": "Zhao",
+          "firstName": "Youquan",
+          "initials": "Y",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0002-4803-6243"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Medical School, Tianjin University, Tianjin 300072, China."
+              },
+              {
+                "affiliation": "School of Precision Instrument and Opto-Electronics Engineering, Tianjin University, Tianjin 300072, China."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "authorIdList": {
+      "authorId": [
+        {
+          "type": "ORCID",
+          "value": "0000-0002-4803-6243"
+        },
+        {
+          "type": "ORCID",
+          "value": "0009-0003-2432-2231"
+        },
+        {
+          "type": "ORCID",
+          "value": "0009-0004-7290-2596"
+        }
+      ]
+    },
+    "dataLinksTagsList": {
+      "dataLinkstag": [
+        "supporting_data"
+      ]
+    },
+    "journalInfo": {
+      "issue": "9",
+      "volume": "16",
+      "journalIssueId": 4270296,
+      "dateOfPublication": "2026 Sep",
+      "monthOfPublication": 9,
+      "yearOfPublication": 2026,
+      "journal": {
+        "medlineAbbreviation": "Biosensors (Basel)",
+        "title": "Biosensors",
+        "essn": "2079-6374",
+        "issn": "2079-6374",
+        "isoabbreviation": "Biosensors (Basel)",
+        "nlmid": "101609191"
+      },
+      "printPublicationDate": "2026-09-01"
+    },
+    "pubYear": "2026",
+    "pageInfo": "483",
+    "abstractText": "Marine ecosystems face escalating threats from heavy metals, harmful algal bloom toxins, pathogens, and antibiotic resistance genes, yet conventional detection methods remain laboratory-dependent and incapable of real-time, multiplexed field monitoring. CRISPR-Cas diagnostics, leveraging programmable Cas12a/Cas13a <i>trans</i>-cleavage for attomolar-level sensitivity, offers a transformative solution when integrated with microfluidic platforms that provide the automation and miniaturisation required for field deployment. This review systematically examines this emerging convergence across four marine target classes: heavy metals, biotoxins, pathogens, and resistance genes alongside integration architectures, signal readout strategies, and comparative performance benchmarking. We identify that only a small fraction of reported platforms have been validated in authentic seawater, with cross-class multiplexing, biofouling resistance during autonomous deployment, and regulatory standardisation remaining largely unaddressed. By synthesising this rapidly developing literature and articulating these unresolved challenges, this review provides a foundational reference and research agenda for translating microfluidic-CRISPR biosensors from laboratory proof-of-concept to operational marine environmental surveillance.",
+    "affiliation": "Medical School, Tianjin University, Tianjin 300072, China.",
+    "publicationStatus": "epublish",
+    "language": "eng",
+    "pubModel": "Electronic",
+    "pubTypeList": {
+      "pubType": [
+        "review-article",
+        "Review",
+        "Journal Article"
+      ]
+    },
+    "meshHeadingList": {
+      "meshHeading": [
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Biosensing Techniques"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Microfluidics"
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Seawater"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Environmental Monitoring"
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "CRISPR-Cas Systems"
+        }
+      ]
+    },
+    "keywordList": {
+      "keyword": [
+        "Antibiotic resistance genes",
+        "Isothermal amplification",
+        "Lab-on-a-chip",
+        "Point-of-care Diagnostics",
+        "Seawater Analysis",
+        "Heavy Metal Ion Detection",
+        "Harmful Algal Bloom Toxins",
+        "Crispr-cas12a/cas13a"
+      ]
+    },
+    "subsetList": {
+      "subset": [
+        {
+          "code": "IM",
+          "name": "Index Medicus"
+        }
+      ]
+    },
+    "fullTextUrlList": {
+      "fullTextUrl": [
+        {
+          "availability": "Subscription required",
+          "availabilityCode": "S",
+          "documentStyle": "doi",
+          "site": "DOI",
+          "url": "https://doi.org/10.3390/bios16090483"
+        },
+        {
+          "availability": "Open access",
+          "availabilityCode": "OA",
+          "documentStyle": "html",
+          "site": "Europe_PMC",
+          "url": "https://europepmc.org/articles/PMC13604611"
+        },
+        {
+          "availability": "Open access",
+          "availabilityCode": "OA",
+          "documentStyle": "pdf",
+          "site": "Europe_PMC",
+          "url": "https://europepmc.org/articles/PMC13604611?pdf=render"
+        }
+      ]
+    },
+    "commentCorrectionList": {
+      "commentCorrection": [
+        {
+          "source": "PPR",
+          "id": "PPR1282215",
+          "type": "Preprint in",
+          "note": "Link created based on a title-first author match",
+          "orderIn": 10002
+        }
+      ]
+    },
+    "isOpenAccess": "Y",
+    "inEPMC": "Y",
+    "inPMC": "Y",
+    "citedByCount": 0,
+    "hasReferences": "Y",
+    "hasTextMinedTerms": "Y",
+    "hasDbCrossReferences": "N",
+    "hasPDF": "Y",
+    "hasBook": "N",
+    "hasSuppl": "N",
+    "hasLabsLinks": "N",
+    "hasData": "Y",
+    "license": "cc by",
+    "authMan": "N",
+    "epmcAuthMan": "N",
+    "nihAuthMan": "N",
+    "hasTMAccessionNumbers": "Y",
+    "tmAccessionTypeList": {
+      "accessionType": [
+        "doi"
+      ]
+    },
+    "dateOfCompletion": "2026-09-24",
+    "dateOfCreation": "2026-09-24",
+    "dateOfRevision": "2026-09-26",
+    "electronicPublicationDate": "2026-09-01",
+    "firstPublicationDate": "2026-09-01",
+    "firstIndexDate": "2026-09-25",
+    "fullTextReceivedDate": "2026-09-25",
+    "hasEvaluations": "N"
+  },
+  {
+    "id": "42469591",
+    "source": "MED",
+    "pmid": "42469591",
+    "doi": "10.1021/acssynbio.6c00308",
+    "title": "Biosensor-Based Detection and Quantification of Arsenic in Drinking Water.",
+    "authorString": "Zeballos Huarachi OS, Tambo Santos AA, Aliaga Rodriguez JJ, Porcel Velasquez AK, Cabero K, Perez-Fernandez C, Boada Y, Tirado N, Ormachea M, García ME, Gonzalez C, Alvarez-Aliaga MT, Pozzo T.",
+    "authorList": {
+      "author": [
+        {
+          "fullName": "Zeballos Huarachi OS",
+          "lastName": "Zeballos Huarachi",
+          "firstName": "Oskar S",
+          "initials": "OS",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Tambo Santos AA",
+          "lastName": "Tambo Santos",
+          "firstName": "Andrea A",
+          "initials": "AA",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0002-6813-9194"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Helix Bloom LLC, Chandler, Arizona85226, United States."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Aliaga Rodriguez JJ",
+          "lastName": "Aliaga Rodriguez",
+          "firstName": "Jonatan J",
+          "initials": "JJ",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Porcel Velasquez AK",
+          "lastName": "Porcel Velasquez",
+          "firstName": "Andy K",
+          "initials": "AK",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Cabero K",
+          "lastName": "Cabero",
+          "firstName": "Karen",
+          "initials": "K",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Helix Bloom LLC, Chandler, Arizona85226, United States."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Perez-Fernandez C",
+          "lastName": "Perez-Fernandez",
+          "firstName": "Cesar",
+          "initials": "C",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Universidad Privada Boliviana, Centro de Investigaciones en Biotecnología, Santa Cruz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Boada Y",
+          "lastName": "Boada",
+          "firstName": "Yadira",
+          "initials": "Y",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Universitat Politècnica de València, Instituto de Automática e Informática Industrial, Systems Biology and Biosystems Control Lab, Valencia46022, Spain."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Tirado N",
+          "lastName": "Tirado",
+          "firstName": "Noemi",
+          "initials": "N",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Universidad Mayor de San Andrés, Instituto de Genética, Unidad de Genética toxicológica, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Academia Nacional de Ciencias de Bolivia, Av. 16 de Julio N°1732, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Ormachea M",
+          "lastName": "Ormachea",
+          "firstName": "Mauricio",
+          "initials": "M",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Universidad Mayor de San Andrés , Instituto de Investigaciones Químicas, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "García ME",
+          "lastName": "García",
+          "firstName": "Maria Eugenia",
+          "initials": "ME",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "Universidad Mayor de San Andrés , Instituto de Investigaciones Químicas, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Gonzalez C",
+          "lastName": "Gonzalez",
+          "firstName": "Cecilia",
+          "initials": "C",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Universidad Privada Boliviana, Campus Mallasa - Achocalla, Km 3.5, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Alvarez-Aliaga MT",
+          "lastName": "Alvarez-Aliaga",
+          "firstName": "Maria Teresa",
+          "initials": "MT",
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Universidad Mayor de San Andrés, Instituto de Investigaciones Fármaco Bioquímicas, La Paz, Bolivia."
+              }
+            ]
+          }
+        },
+        {
+          "fullName": "Pozzo T",
+          "lastName": "Pozzo",
+          "firstName": "Tania",
+          "initials": "T",
+          "authorId": {
+            "type": "ORCID",
+            "value": "0000-0002-3645-2303"
+          },
+          "authorAffiliationDetailsList": {
+            "authorAffiliation": [
+              {
+                "affiliation": "iGEM Bolivia, La Paz, Bolivia."
+              },
+              {
+                "affiliation": "Helix Bloom LLC, Chandler, Arizona85226, United States."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "authorIdList": {
+      "authorId": [
+        {
+          "type": "ORCID",
+          "value": "0000-0002-3645-2303"
+        },
+        {
+          "type": "ORCID",
+          "value": "0000-0002-6813-9194"
+        },
+        {
+          "type": "ORCID",
+          "value": "0009-0000-7943-8993"
+        }
+      ]
+    },
+    "journalInfo": {
+      "issue": "8",
+      "volume": "15",
+      "journalIssueId": 4247030,
+      "dateOfPublication": "2026 Aug",
+      "monthOfPublication": 8,
+      "yearOfPublication": 2026,
+      "journal": {
+        "medlineAbbreviation": "ACS Synth Biol",
+        "title": "ACS synthetic biology",
+        "essn": "2161-5063",
+        "issn": "2161-5063",
+        "isoabbreviation": "ACS Synth Biol",
+        "nlmid": "101575075"
+      },
+      "printPublicationDate": "2026-08-01"
+    },
+    "pubYear": "2026",
+    "pageInfo": "3123-3138",
+    "abstractText": "Arsenic contamination of drinking water remains a persistent global health burden and an environmental justice challenge, particularly for low-resource communities that lack access to reliable monitoring tools. Synthetic-biology-driven biosensors offer a promising complement to conventional analytical methods by coupling arsenic-responsive genetic circuits with portable, low-cost readouts suitable for field deployment. This review traces the evolution from the early ArsR-based Escherichia coli biosensor to modern whole-cell and cell-free platforms that approach World Health Organization-relevant detection limits for arsenic in water under controlled conditions, emphasizing how signal amplification strategies intersect with shelf life, biosafety, and regulatory simplicity. The operational principles of ars operon-derived modules are examined across detection, processing, and host-engineering layers that collectively tune sensitivity, dynamic range, and robustness. Immobilization formats, microfluidic architectures, and transduction mechanisms─including colorimetric, fluorescent, bioluminescent, and electrochemical outputs─are analyzed for their ability to integrate biological sensing with commodity optics and electronics in portable devices. Building on this engineering landscape, the review highlights how biodesign automation, high-throughput Design-Build-Test-Learn workflows, and emerging AI tools such as supervised learning and Bayesian optimization are accelerating the construction and optimization of arsenic-responsive genetic circuits. Biosafety and regulatory considerations, including biocontainment, standardized stress-testing, and community codesign, are discussed to position arsenic biosensors as candidates for integration into distributed water-quality monitoring networks that combine synthetic biology, low-cost hardware, automation, and AI under robust governance regimes.",
+    "affiliation": "iGEM Bolivia, La Paz, Bolivia.",
+    "publicationStatus": "ppublish",
+    "language": "eng",
+    "pubModel": "Print",
+    "pubTypeList": {
+      "pubType": [
+        "Review",
+        "Journal Article"
+      ]
+    },
+    "grantsList": {
+      "grant": [
+        {
+          "agency": "Vetenskapsr?det",
+          "grantId": "2020 0287",
+          "orderIn": 0
+        },
+        {
+          "agency": "Secretar?a de Educaci?n Superior, Ciencia, Tecnolog?a e Innovaci?n",
+          "grantId": "NA",
+          "orderIn": 0
+        },
+        {
+          "agency": "Vetenskapsr?det",
+          "grantId": "2016 05779",
+          "orderIn": 0
+        },
+        {
+          "agency": "Institut de Recherche pour le D?veloppement",
+          "grantId": "NA",
+          "orderIn": 0
+        },
+        {
+          "agency": "Universitat Polit?cnica de Val?ncia",
+          "grantId": "PAID 06 24",
+          "orderIn": 0
+        },
+        {
+          "agency": "Agencia Estatal de Investigaci?n",
+          "grantId": "DBTL4SYNBIOCON: PID2023 151077OB I00",
+          "orderIn": 0
+        },
+        {
+          "agency": "Vetenskapsr?det",
+          "grantId": "2017 01239",
+          "orderIn": 0
+        },
+        {
+          "agency": "The World Academy of Sciences",
+          "grantId": "21 014 RG/BIO/LA_I FR3240319458",
+          "orderIn": 0
+        },
+        {
+          "agency": "Styrelsen f?r Internationellt Utvecklingssamarbete",
+          "grantId": "54100087",
+          "orderIn": 0
+        }
+      ]
+    },
+    "meshHeadingList": {
+      "meshHeading": [
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Escherichia coli",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "GE",
+                "qualifierName": "genetics"
+              },
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "ME",
+                "qualifierName": "metabolism"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Arsenic",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "AN",
+                "qualifierName": "analysis"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Water Pollutants, Chemical",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "AN",
+                "qualifierName": "analysis"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Biosensing Techniques",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "MT",
+                "qualifierName": "methods"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "N",
+          "descriptorName": "Synthetic Biology",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "MT",
+                "qualifierName": "methods"
+              }
+            ]
+          }
+        },
+        {
+          "majorTopic_YN": "Y",
+          "descriptorName": "Drinking Water",
+          "meshQualifierList": {
+            "meshQualifier": [
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "AN",
+                "qualifierName": "analysis"
+              },
+              {
+                "majorTopic_YN": "N",
+                "abbreviation": "CH",
+                "qualifierName": "chemistry"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    "keywordList": {
+      "keyword": [
+        "Artificial intelligence",
+        "water quality monitoring",
+        "Synthetic Biology",
+        "Biodesign Automation",
+        "Whole-cell Biosensors",
+        "Cell-free Biosensors",
+        "Arsenic Biosensors",
+        "Genetic Circuit Engineering"
+      ]
+    },
+    "chemicalList": {
+      "chemical": [
+        {
+          "name": "Water Pollutants, Chemical",
+          "registryNumber": "0"
+        },
+        {
+          "name": "Drinking Water",
+          "registryNumber": "0"
+        },
+        {
+          "name": "Arsenic",
+          "registryNumber": "N712M78A8G"
+        }
+      ]
+    },
+    "subsetList": {
+      "subset": [
+        {
+          "code": "IM",
+          "name": "Index Medicus"
+        }
+      ]
+    },
+    "fullTextUrlList": {
+      "fullTextUrl": [
+        {
+          "availability": "Subscription required",
+          "availabilityCode": "S",
+          "documentStyle": "doi",
+          "site": "DOI",
+          "url": "https://doi.org/10.1021/acssynbio.6c00308"
+        }
+      ]
+    },
+    "isOpenAccess": "N",
+    "inEPMC": "N",
+    "inPMC": "N",
+    "citedByCount": 0,
+    "hasReferences": "Y",
+    "hasTextMinedTerms": "Y",
+    "hasDbCrossReferences": "N",
+    "hasPDF": "N",
+    "hasBook": "N",
+    "hasSuppl": "N",
+    "hasLabsLinks": "N",
+    "hasData": "N",
+    "authMan": "N",
+    "epmcAuthMan": "N",
+    "nihAuthMan": "N",
+    "hasTMAccessionNumbers": "N",
+    "dateOfCompletion": "2026-08-22",
+    "dateOfCreation": "2026-07-17",
+    "dateOfRevision": "2026-08-22",
+    "firstPublicationDate": "2026-08-01",
+    "firstIndexDate": "2026-07-18",
+    "hasEvaluations": "N"
+  }
+]
