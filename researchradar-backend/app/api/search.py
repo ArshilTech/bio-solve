@@ -1,14 +1,19 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, HTTPException, Query, Request
 from app.schemas.papers import SearchResponse
 from app.services.europe_pmc import search_europe_pmc
 from app.services.paper_processor import process_papers
 from app.utils.logging import logger
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 router = APIRouter(tags=["Literature"])
+limiter = Limiter(key_func=get_remote_address)
 
 
 @router.get("/search", response_model=SearchResponse)
+@limiter.limit("30/minute")
 async def search_literature(
+    request: Request,
     q: str = Query(..., min_length=3, max_length=500, description="Scientific research search query"),
     limit: int = Query(default=20, ge=1, le=20, description="Maximum number of papers to retrieve"),
 ):

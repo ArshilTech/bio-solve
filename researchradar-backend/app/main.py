@@ -1,6 +1,10 @@
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from slowapi import Limiter, _rate_limit_exceeded_handler
+from slowapi.util import get_remote_address
+from slowapi.errors import RateLimitExceeded
+from slowapi.middleware import SlowAPIMiddleware
 
 from app.config import get_settings
 from app.api.health import router as health_router
@@ -17,6 +21,9 @@ settings = get_settings()
 # Initialize database schema on startup
 init_db()
 
+# Rate limiter - keyed by client IP
+limiter = Limiter(key_func=get_remote_address, default_limits=["120/minute"])
+
 app = FastAPI(
     title="ResearchRadar AI",
     description=(
@@ -25,6 +32,11 @@ app = FastAPI(
     ),
     version="1.0.0",
 )
+
+# Attach rate limiter state and middleware
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
+app.add_middleware(SlowAPIMiddleware)
 
 # CORS middleware for React Vite frontend (port 5173, port 3000, etc.)
 app.add_middleware(
