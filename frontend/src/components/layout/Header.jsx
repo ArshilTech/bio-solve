@@ -1,40 +1,45 @@
 
-import { Bell, FlaskConical } from "lucide-react";
+import { Menu } from "lucide-react";
 
-export default function Header({
-  title = "Research Workspace",
-  subtitle = "Discover evidence and uncover new research directions.",
-}) {
+export default function Header({ active, onMenu }) {
+  const labels = {
+    overview: "Overview",
+    literature: "Literature explorer",
+    gaps: "Research gap analysis",
+    graph: "Evidence map",
+    experiment: "Experiment lab",
+  };
+
   return (
-    <header className="flex min-h-[76px] flex-wrap items-center justify-between gap-4 border-b border-[#e3eae4] bg-white px-6 py-4 lg:px-8">
-      <div>
-        <p className="text-xs font-medium text-[#819087]">
-          ResearchRadar / Workspace
-        </p>
-        <h2 className="mt-1 text-lg font-semibold text-[#203b35]">{title}</h2>
-        {subtitle && (
-          <p className="mt-1 text-sm text-[#7a8981]">{subtitle}</p>
-        )}
-      </div>
-
+    <header className="sticky top-0 z-20 flex h-[72px] items-center justify-between border-b border-[#e2e9e4] bg-[#f8faf8]/95 px-4 backdrop-blur sm:px-7 lg:px-9">
       <div className="flex items-center gap-3">
-        <div className="hidden items-center gap-2 rounded-full border border-[#e2eae3] bg-[#f8faf8] px-3 py-2 sm:flex">
-          <span className="h-2 w-2 rounded-full bg-[#4b9a70]" />
-          <span className="text-xs font-medium text-[#557267]">
-            Research mode
-          </span>
-        </div>
-
         <button
           type="button"
-          aria-label="Notifications"
-          className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#e1e9e2] text-[#64776e] transition-colors hover:bg-[#f3f7f3]"
+          onClick={onMenu}
+          aria-label="Open navigation"
+          className="rounded-lg p-2 text-[#42645a] hover:bg-[#eaf1ec] lg:hidden"
         >
-          <Bell size={18} />
+          <Menu size={20} />
         </button>
 
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#edf3ed] text-[#355e50]">
-          <FlaskConical size={19} />
+        <div>
+          <div className="text-[10px] font-semibold uppercase tracking-[0.16em] text-[#789087]">
+            Research workspace
+          </div>
+          <div className="mt-0.5 text-[15px] font-bold text-[#193a35]">
+            {labels[active] || "Overview"}
+          </div>
+        </div>
+      </div>
+
+      <div className="flex items-center gap-2 sm:gap-3">
+        <div className="hidden items-center gap-2 rounded-full border border-[#e0e8e2] bg-white px-3 py-2 text-[11px] font-medium text-[#5d766e] sm:flex">
+          <span className="h-2 w-2 rounded-full bg-[#32a879]" />
+          Frontend ready
+        </div>
+
+        <div className="grid h-9 w-9 place-items-center rounded-full bg-[#dcebe3] text-xs font-bold text-[#285a4b]">
+          RR
         </div>
       </div>
     </header>

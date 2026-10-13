@@ -1,81 +1,115 @@
 
 import {
-  LayoutDashboard,
+  Activity,
   BookOpen,
-  Lightbulb,
-  Network,
+  FileSearch,
   FlaskConical,
-  Radar,
-  ChevronRight,
+  Network,
+  ShieldCheck,
+  Waves,
+  X,
 } from "lucide-react";
 
-const navigation = [
-  { id: "overview", label: "Overview", icon: LayoutDashboard },
-  { id: "literature", label: "Literature Review", icon: BookOpen },
-  { id: "gaps", label: "Research Gaps", icon: Lightbulb },
-  { id: "evidence", label: "Evidence Map", icon: Network },
-  { id: "experiments", label: "Experiments", icon: FlaskConical },
-];
+const cn = (...values) => values.filter(Boolean).join(" ");
 
-export default function Sidebar({
-  activePage = "overview",
-  onNavigate = () => {},
-}) {
+export default function Sidebar({ active, setActive, open, setOpen }) {
+  const items = [
+    { id: "overview", label: "Overview", icon: Activity },
+    { id: "literature", label: "Literature", icon: BookOpen },
+    { id: "gaps", label: "Research gaps", icon: FileSearch },
+    { id: "graph", label: "Evidence map", icon: Network },
+    { id: "experiment", label: "Experiment lab", icon: FlaskConical },
+  ];
+
   return (
-    <aside className="flex h-full w-64 shrink-0 flex-col border-r border-[#e0e8e2] bg-white">
-      <div className="flex items-center gap-3 border-b border-[#edf1ed] px-5 py-5">
-        <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#183f3b] text-white">
-          <Radar size={23} />
+    <>
+      {open && (
+        <button
+          aria-label="Close menu overlay"
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 z-30 bg-black/30 lg:hidden"
+        />
+      )}
+
+      <aside
+        className={cn(
+          "fixed inset-y-0 left-0 z-40 flex w-[258px] flex-col bg-[#102a2a] text-white transition-transform lg:translate-x-0",
+          open ? "translate-x-0" : "-translate-x-full"
+        )}
+      >
+        <div className="flex h-[82px] items-center gap-3 border-b border-white/10 px-6">
+          <div className="grid h-10 w-10 place-items-center rounded-[14px] bg-[#b9ef71] text-[#173c32]">
+            <Waves size={22} strokeWidth={2.4} />
+          </div>
+
+          <div>
+            <div className="text-[17px] font-bold tracking-tight">
+              ResearchRadar
+            </div>
+            <div className="mt-0.5 text-[10px] font-semibold uppercase tracking-[0.19em] text-[#9ab9af]">
+              Scientific discovery
+            </div>
+          </div>
+
+          <button
+            onClick={() => setOpen(false)}
+            aria-label="Close navigation"
+            className="ml-auto rounded-lg p-1 text-white/60 hover:bg-white/10 lg:hidden"
+          >
+            <X size={18} />
+          </button>
         </div>
 
-        <div>
-          <h1 className="text-base font-semibold tracking-tight text-[#183333]">
-            ResearchRadar
-          </h1>
-          <p className="mt-0.5 text-xs text-[#7c8b83]">AI Research Workspace</p>
-        </div>
-      </div>
+        <div className="px-4 pt-7">
+          <div className="px-3 pb-3 text-[10px] font-bold uppercase tracking-[0.2em] text-[#78978e]">
+            Workspace
+          </div>
 
-      <div className="px-4 pt-6">
-        <p className="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[0.16em] text-[#98a69e]">
-          Workspace
-        </p>
-
-        <nav className="space-y-1" aria-label="Main navigation">
-          {navigation.map(({ id, label, icon: Icon }) => {
-            const isActive = activePage === id;
-
-            return (
+          <nav className="space-y-1" aria-label="Main navigation">
+            {items.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 type="button"
-                onClick={() => onNavigate(id)}
-                aria-current={isActive ? "page" : undefined}
-                className={`group flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-sm transition-colors ${
-                  isActive
-                    ? "bg-[#eaf3ed] font-semibold text-[#24564b]"
-                    : "text-[#697b72] hover:bg-[#f5f8f5] hover:text-[#294b40]"
-                }`}
+                onClick={() => {
+                  setActive(id);
+                  setOpen(false);
+                }}
+                aria-current={active === id ? "page" : undefined}
+                className={cn(
+                  "flex w-full items-center gap-3 rounded-xl px-3 py-3 text-left text-[13px] font-medium transition",
+                  active === id
+                    ? "bg-[#234642] text-white shadow-inner"
+                    : "text-[#a8c0b8] hover:bg-white/5 hover:text-white"
+                )}
               >
-                <Icon size={18} strokeWidth={isActive ? 2.2 : 1.8} />
-                <span className="flex-1">{label}</span>
-                {isActive && <ChevronRight size={15} />}
+                <Icon size={17} strokeWidth={1.8} />
+                <span>{label}</span>
+                {active === id && (
+                  <span className="ml-auto h-1.5 w-1.5 rounded-full bg-[#c4f47e]" />
+                )}
               </button>
-            );
-          })}
-        </nav>
-      </div>
-
-      <div className="mt-auto p-4">
-        <div className="rounded-xl border border-[#e4ebe5] bg-[#f7faf7] p-3">
-          <p className="text-xs font-semibold text-[#35564b]">
-            Research workspace
-          </p>
-          <p className="mt-1 text-xs leading-5 text-[#7b8b82]">
-            Explore literature, connect evidence, and identify research gaps.
-          </p>
+            ))}
+          </nav>
         </div>
-      </div>
-    </aside>
+
+        <div className="mt-auto p-4">
+          <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
+            <div className="flex items-center gap-2 text-xs font-semibold text-[#d4e5dd]">
+              <ShieldCheck size={15} className="text-[#b9ef71]" />
+              Evidence first
+            </div>
+            <p className="mt-2 text-[11px] leading-5 text-[#91aaa1]">
+              Candidate gaps are linked to source records. Findings still need
+              scientific review.
+            </p>
+          </div>
+
+          <div className="mt-4 flex items-center gap-2 px-2 text-[10px] text-[#6f9085]">
+            <span className="h-2 w-2 rounded-full bg-[#b9ef71]" />
+            BioSolve Hackathon · Problem 8
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }
