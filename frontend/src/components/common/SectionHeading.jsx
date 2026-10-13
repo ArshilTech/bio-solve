@@ -1,15 +1,27 @@
 
-export default function SectionHeading({ title, description, action }) {
+export default function SectionHeading({
+  title,
+  detail,
+  description,
+  action,
+}) {
+  const supportingText = detail ?? description;
+
   return (
-    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+    <div className="mb-4 flex items-center justify-between gap-3">
       <div>
-        <h2 className="text-base font-semibold text-[#203b35]">{title}</h2>
-        {description && (
-          <p className="mt-1 text-sm text-[#788780]">{description}</p>
+        <h3 className="text-[15px] font-bold text-[#23433c]">
+          {title}
+        </h3>
+
+        {supportingText && (
+          <p className="mt-1 text-xs text-[#87978f]">
+            {supportingText}
+          </p>
         )}
       </div>
 
-      {action && <div>{action}</div>}
+      {action}
     </div>
   );
 }

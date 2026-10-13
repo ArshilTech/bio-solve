@@ -1,28 +1,27 @@
 
 export default function Button({
   children,
+  onClick,
   variant = "primary",
+  disabled = false,
   className = "",
   type = "button",
-  ...props
 }) {
-  const base =
-    "inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2";
-
   const variants = {
     primary:
-      "bg-[#183f3b] text-white hover:bg-[#24554e] focus:ring-[#183f3b]",
+      "bg-[#176f60] text-white shadow-sm hover:bg-[#12594e] disabled:bg-[#9cbab2]",
     secondary:
-      "border border-[#d8e2dd] bg-white text-[#294540] hover:bg-[#f3f7f4] focus:ring-[#9ab8ad]",
+      "border border-[#d9e3de] bg-white text-[#24413d] hover:bg-[#f7faf8]",
     ghost:
-      "text-[#55716a] hover:bg-[#edf3ef] hover:text-[#183f3b] focus:ring-[#9ab8ad]",
+      "text-[#55716a] hover:bg-[#edf4f0]",
   };
 
   return (
     <button
       type={type}
-      className={`${base} ${variants[variant] || variants.primary} ${className}`}
-      {...props}
+      disabled={disabled}
+      onClick={onClick}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:cursor-not-allowed ${variants[variant] || variants.primary} ${className}`}
     >
       {children}
     </button>
