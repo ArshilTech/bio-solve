@@ -1,14 +1,11 @@
 from uuid import uuid4
-
 from fastapi import APIRouter, HTTPException
-
 from app.schemas.requests import AnalyzeRequest
 from app.services.gap_analyzer import analyze_research_question
+from app.repositories.analysis_repository import save_analysis
+from app.utils.logging import logger
 
 router = APIRouter(tags=["Analysis"])
-
-
-ANALYSES: dict[str, dict] = {}
 
 
 @router.post("/analyze")
@@ -20,11 +17,10 @@ async def analyze(request: AnalyzeRequest):
         )
 
         analysis_id = str(uuid4())
-
         result["analysis_id"] = analysis_id
-        result["question"] = request.question
 
-        ANALYSES[analysis_id] = result
+        # Persist to repository
+        save_analysis(result)
 
         return result
 
@@ -34,9 +30,12 @@ async def analyze(request: AnalyzeRequest):
             detail=str(exc),
         ) from exc
 
+    except HTTPException:
+        raise
+
     except Exception as exc:
-        
+        logger.error("Analysis endpoint unexpected error: %s", str(exc), exc_info=True)
         raise HTTPException(
             status_code=502,
-            detail="Analysis failed. Please retry.",
+            detail="Scientific literature analysis failed. Please verify your query or retry.",
         ) from exc
